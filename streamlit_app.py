@@ -3,10 +3,12 @@ import streamlit.components.v1 as components
 
 LOGO_URL = "https://www.ltl.uni-due.de/assets/images/logo3.png"
 description = """
-<p style='outline-style: solid;padding:10px;outline-color: green;'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, 
-but also the leap into electronic typesetting, remaining essentially unchanged. 
-It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p
+<p style='outline-style: solid;padding:10px;outline-color: green;'> <b>PROTECTION OF DATA</b>
+The owners of this website take the security of your personal information very seriously. We handle your personal data with confidentiality and in compliance with the applicable data protection laws and this data protection statement.
+
+Various personal data are gathered when you use this website. Personal data are pieces of information that may be used to identify you personally. This data protection statement outlines what information we gather and how we utilize it. It also discusses why and how this is accomplished.
+
+We'd like to emphasize that data transfer via the Internet (for example, while interacting through e-mail) may have security flaws. It is not feasible to completely secure data from unauthorized access.</p>
 """
 
 resultAndExplanationHTML = """
@@ -37,7 +39,7 @@ resultAndExplanationHTML = """
 """
 
 st.image(use_column_width=True, image=LOGO_URL)
-# st.image(use_column_width=True)
+st.image(use_column_width=True)
 
 components.html(description, width=700, scrolling=True)
 
