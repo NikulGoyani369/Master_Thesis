@@ -39,8 +39,6 @@ resultAndExplanationHTML = """
 """
 
 st.image(use_column_width=True, image=LOGO_URL)
-st.image(use_column_width=True)
-
 components.html(description, width=700, scrolling=True)
 
 st.markdown("___")
