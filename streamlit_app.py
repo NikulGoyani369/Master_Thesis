@@ -2,7 +2,6 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 LOGO_URL = "https://www.ltl.uni-due.de/assets/images/logo3.png"
-LOGOURL = "https://www.ltl.uni-due.de/"
 description = """
 <h2>Master Thesis Topic:- Collecting and analyse automatically generated feedback explanations</h2>
 <p style='outline-style: solid;padding:10px;outline-color: green; font-size:16px; font-family: 'Open Sans', sans-serif;'> <b>PROTECTION OF DATA:-</b><br>
@@ -44,7 +43,7 @@ resultAndExplanationHTML = """
 </div>
 """
 
-st.image(use_column_width=True, image=LOGO_URL, link=LOGOURL) 
+st.image(use_column_width=True, image=LOGO_URL) 
 components.html(description, height=340, width=700, scrolling=True)
 
 st.markdown("___")
