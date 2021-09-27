@@ -44,7 +44,7 @@ resultAndExplanationHTML = """
 """
 
 st.image(use_column_width=True, image=LOGO_URL)
-components.html(description, height=300, width=750, scrolling=True)
+components.html(description, height=330, width=750, scrolling=True)
 
 st.markdown("___")
 with st.form("my_form"):
