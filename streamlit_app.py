@@ -48,7 +48,7 @@ components.html(description, width=700, scrolling=True)
 st.markdown("___")
 with st.form("my_form"):
     st.write("Question")
-    question = "<p style='outline-style: solid;padding:10px;outline-color: green;'>Explain why circuit 2 is not a short circuit.</p>"
+    question = "<p style='outline-style: solid;padding:10px;outline-color: green; font-size:18px;font-family:Source Sans Pro, sans-serif;'>Explain why circuit 2 is not a short circuit.</p>"
     components.html(question)
     answer = st.text_input("Answer")
     isSubmitted = st.form_submit_button("Submit")
