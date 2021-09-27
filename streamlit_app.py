@@ -58,7 +58,7 @@ with st.form("my_form"):
     with c2:
         answer = st.text_area("Answer", height=80)
     with c3:
-        c3
+        answer
     with c4:
         isSubmitted = st.form_submit_button("Submit")
 
