@@ -49,7 +49,7 @@ components.html(description, height=340, width=700, scrolling=True)
 st.markdown("___")
 with st.form("my_form"):
     
-    c1, c2, c3 = st.columns(3)
+    c1, c2, c3, c4= st.columns(3)
     with c1:
         st.write("Question")
         question = "<p style='outline-style: solid;padding:10px;outline-color: green; font-size:18px;font-family:Source Sans Pro, sans-serif;'>Explain why circuit 2 is not a short circuit.</p>"
@@ -58,6 +58,8 @@ with st.form("my_form"):
     with c2:
         answer = st.text_area("Answer", height=80)
     with c3:
+        c3
+    with c4:
         isSubmitted = st.form_submit_button("Submit")
 
     # Every form must have a submit button.
