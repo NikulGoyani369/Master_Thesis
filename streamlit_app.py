@@ -4,7 +4,7 @@ import streamlit.components.v1 as components
 LOGO_URL = "https://www.ltl.uni-due.de/assets/images/logo3.png"
 description = """
 <h2>Master Thesis Topic:- Collecting and analyse automatically generated feedback explanations</h2>
-<p style='outline-style: solid;padding:10px;outline-color: green; font-size:16px; font-family: 'Open Sans', sans-serif;'> <h5><b>PROTECTION OF DATA:-</b></h5><br>
+<p style='outline-style: solid;padding:10px;outline-color: green; font-size:16px; font-family: 'Open Sans', sans-serif;'> <b>PROTECTION OF DATA:-</b><br>
 <ol style='font-size:18px;font-family: "Source Sans Pro", sans-serif;'>
   <li>The owners of this website take the security of your personal information very seriously. We handle your personal data with confidentiality and in compliance with the applicable data protection laws and this data protection statement.</li>
   <li>Various personal data are gathered when you use this website. Personal data are pieces of information that may be used to identify you personally. This data protection statement outlines what information we gather and how we utilize it. It also discusses why and how this is accomplished.</li>
