@@ -56,7 +56,7 @@ with st.form("my_form"):
         components.html(question)
     # st.write("Answer")
     with c2:
-        answer = st.text_area("Answer", height=80)
+        answer = st.text_area("Answer", height=80 , width= 50)
     with c3:
         answer
     with c4:
