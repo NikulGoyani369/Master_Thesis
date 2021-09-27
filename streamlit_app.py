@@ -43,7 +43,7 @@ resultAndExplanationHTML = """
 </div>
 """
 
-st.image(use_column_width=True, image=LOGO_URL) 
+st.image(use_column_width=True, image=LOGO_URL)
 components.html(description, height=340, width=700, scrolling=True)
 
 st.markdown("___")
@@ -51,7 +51,7 @@ with st.form("my_form"):
     st.write("Question")
     question = "<p style='outline-style: solid;padding:10px;outline-color: green; font-size:18px;font-family:Source Sans Pro, sans-serif;'>Explain why circuit 2 is not a short circuit.</p>"
     components.html(question)
-    answer = st.text_input("Answer", height=80)
+    answer = st.text_area("Answer", height=80)
     isSubmitted = st.form_submit_button("Submit")
 
     # Every form must have a submit button.
