@@ -51,7 +51,7 @@ with st.form("my_form"):
     st.write("Question")
     question = "<p style='outline-style: solid;padding:10px;outline-color: green; font-size:18px;font-family:Source Sans Pro, sans-serif;'>Explain why circuit 2 is not a short circuit.</p>"
     components.html(question)
-    answer = st.text_input("Answer")
+    answer = st.text_input("Answer", height=80)
     isSubmitted = st.form_submit_button("Submit")
 
     # Every form must have a submit button.
