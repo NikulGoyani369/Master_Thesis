@@ -105,8 +105,10 @@ st.markdown("___")
 with st.form("my_form"):
     st.subheader('Below we will show the all questions come form dataset')
     st.write("Question")
-    question = f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {Ques}</p>"
-    Q = Ques
+    # question = f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {Ques}</p>"
+    # Q = Ques
+    question = "<p style='outline-style: solid;padding:10px;outline-color: green;'> e.g. Explain why circuit 2 is not a short circuit.</p>"
+   
     components.html(question)
     st.subheader('Below student will write their answers')
     answer = st.text_input("Answer")
