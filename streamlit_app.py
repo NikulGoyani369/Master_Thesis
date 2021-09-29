@@ -11,6 +11,9 @@ openai.api_key = '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'
 
 if 'count' not in st.session_state:
     st.session_state.count = 0
+    st.write("you are out of  the session")
+else:
+    st.write("you are in the session")
 
 
 def increment_counter():
