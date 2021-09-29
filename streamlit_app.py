@@ -19,10 +19,10 @@ import pandas as pd
 # def increment_counter():
 #     st.session_state.count += 1
 
-# # this parth for local machine
-# FILEs = glob.glob("/Users/Nikul/Documents/Master_Thesis_Work_Nikul/1 Master Thesis/Prof Torsten Thesis 2021/Thesis programming/Master_Thesis/semeval2013-Task7-2and3way*/2way/*/*.xml") + \
-#     glob.glob(
-#         "/Users/Nikul/Documents/Master_Thesis_Work_Nikul/1 Master Thesis/Prof Torsten Thesis 2021/Thesis programming/Master_Thesis/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+# this parth for local machine
+FILEs = glob.glob("/Users/Nikul/Documents/Master_Thesis_Work_Nikul/1 Master Thesis/Prof Torsten Thesis 2021/Thesis programming/Master_Thesis/semeval2013-Task7-2and3way*/2way/*/*.xml") + \
+    glob.glob(
+        "/Users/Nikul/Documents/Master_Thesis_Work_Nikul/1 Master Thesis/Prof Torsten Thesis 2021/Thesis programming/Master_Thesis/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 
 # this parth for Live searver
