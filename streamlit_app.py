@@ -1,5 +1,5 @@
 import streamlit as st
-from stremlit_searver_state import searver_state, server_state_lock
+from stremlit_searver_state import searver_state
 import streamlit.components.v1 as components
 from bs4 import BeautifulSoup
 import glob
