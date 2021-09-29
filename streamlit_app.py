@@ -1,5 +1,4 @@
-import streamlit as st
-from stremlit_searver_state import searver_state
+import streamlit as st 
 import streamlit.components.v1 as components
 from bs4 import BeautifulSoup
 import glob
@@ -10,15 +9,15 @@ openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
 openai.api_key = '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'
 
 
-if 'count' not in st.server_state:
-    st.server_state.count = 0
+if 'count' not in st.session_state:
+    st.session_state.count = 0
     # st.write("you are out of  the session")
 # else:
 #     st.write("you are in the session")
 
 
 def increment_counter():
-    st.server_state.count += 1
+    st.session_state.count += 1
 
 # # this parth for local machine
 # FILEs = glob.glob("/Users/Nikul/Documents/Master_Thesis_Work_Nikul/1 Master Thesis/Prof Torsten Thesis 2021/Thesis programming/Master_Thesis/semeval2013-Task7-2and3way*/2way/*/*.xml") + \
