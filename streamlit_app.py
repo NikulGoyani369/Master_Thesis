@@ -138,8 +138,7 @@ with st.form("my_form"):
         top_p=1,
         frequency_penalty=2,
         presence_penalty=2,
-        stop=["\n"]
-    )
+        stop=["\n"])
 
 
 @st.cache(suppress_st_warning=True)
