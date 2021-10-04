@@ -15,6 +15,7 @@ if 'count' not in st.session_state:
     st.session_state.count = 0
     st.session_state.student_explanat = 'first time'
     st.session_state.st = 'first time'
+    st.session_state['answer'] = ''
 
 
 def increment_counter():
