@@ -4,9 +4,9 @@ from bs4 import BeautifulSoup
 import glob
 import os
 import pandas as pd
-# import openai
-# openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
-# openai.api_key = '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'
+import openai
+openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
+openai.api_key = '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'
 
 
 if 'count' not in st.session_state:
@@ -44,7 +44,7 @@ except IndexError:
 # Bs_data = BeautifulSoup(data, "xml")
 
 # # Finding all instances of tag
-# # `unique`
+`unique`
 b_unique = Bs_data.find_all('questionText')
 Anse = Bs_data.find_all('studentAnswer', accuracy="correct")
 sub1 = "<questionText>"
