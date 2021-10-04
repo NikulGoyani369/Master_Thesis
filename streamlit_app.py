@@ -136,7 +136,7 @@ with st.form("my_form"):
         # get string from next character
         res = str(i)[idx1 + len(sub1): idx2]
         realans.append(res)
-    if st.session_state.answer in realans:
+    if  st.session_state.answer in realans:
         answerStat = "correct"
     elif st.session_state.answer not in realans:
         answerStat = "incorrect"
