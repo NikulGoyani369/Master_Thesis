@@ -26,9 +26,9 @@ def increment_counter():
 
 
 # this parth for Live searver
-FILEs = glob.glob("/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
+FILEs = glob.glob("./semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
     glob.glob(
-        "/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+        "./semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 try:
     f = open(f'{FILEs[st.session_state.count]}', 'r')
