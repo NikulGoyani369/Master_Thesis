@@ -148,7 +148,7 @@ with st.form("my_form"):
         frequency_penalty=2,
         presence_penalty=2,
         stop=["\n\n"]
-    )
+     )
 
 
 
