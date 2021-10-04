@@ -9,34 +9,34 @@ import pandas as pd
 # openai.api_key = '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'
 
 
-# if 'count' not in st.session_state:
-#     st.session_state.count = 0
-#     # st.write("you are out of  the session")
-# # else:
-# #     st.write("you are in the session")
+if 'count' not in st.session_state:
+    st.session_state.count = 0
+    st.write("you are out of  the session")
+else:
+    st.write("you are in the session")
 
 
-# def increment_counter():
-#     st.session_state.count += 1
+def increment_counter():
+    st.session_state.count += 1
 
 # this parth for local machine
-FILEs = glob.glob("/Users/Nikul/Documents/Master_Thesis_Work_Nikul/1 Master Thesis/Prof Torsten Thesis 2021/Thesis programming/Master_Thesis/semeval2013-Task7-2and3way*/2way/*/*.xml") + \
-    glob.glob(
-        "/Users/Nikul/Documents/Master_Thesis_Work_Nikul/1 Master Thesis/Prof Torsten Thesis 2021/Thesis programming/Master_Thesis/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+# FILEs = glob.glob("/Users/Nikul/Documents/Master_Thesis_Work_Nikul/1 Master Thesis/Prof Torsten Thesis 2021/Thesis programming/Master_Thesis/semeval2013-Task7-2and3way*/2way/*/*.xml") + \
+#     glob.glob(
+#         "/Users/Nikul/Documents/Master_Thesis_Work_Nikul/1 Master Thesis/Prof Torsten Thesis 2021/Thesis programming/Master_Thesis/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 
 # this parth for Live searver
-# FILEs = glob.glob("/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
-#     glob.glob(
-#         "/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+FILEs = glob.glob("/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
+    glob.glob(
+        "/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
-# try:
-#     f = open(f'{FILEs[st.session_state.count]}', 'r')
-#     data = f.read()
-# except IndexError:
-#     st.session_state.count = 0
-#     f = open(f'{FILEs[st.session_state.count]}', 'r')
-#     data = f.read()
+try:
+    f = open(f'{FILEs[st.session_state.count]}', 'r')
+    data = f.read()
+except IndexError:
+    st.session_state.count = 0
+    f = open(f'{FILEs[st.session_state.count]}', 'r')
+    data = f.read()
 
 # Passing the stored data inside
 # the beautifulsoup parser, storing
@@ -45,16 +45,16 @@ FILEs = glob.glob("/Users/Nikul/Documents/Master_Thesis_Work_Nikul/1 Master Thes
 
 # # Finding all instances of tag
 # # `unique`
-# b_unique = Bs_data.find_all('questionText')
-# Anse = Bs_data.find_all('studentAnswer', accuracy="correct")
-# sub1 = "<questionText>"
-# sub2 = '</questionText>'
-# # getting index of substrings
-# idx1 = str(b_unique[0]).index(sub1)
-# idx2 = str(b_unique[0]).index(sub2)
-# # length of substring 1 is added to
-# # get string from next character
-# Ques = str(b_unique[0])[idx1 + len(sub1): idx2]
+b_unique = Bs_data.find_all('questionText')
+Anse = Bs_data.find_all('studentAnswer', accuracy="correct")
+sub1 = "<questionText>"
+sub2 = '</questionText>'
+# getting index of substrings
+idx1 = str(b_unique[0]).index(sub1)
+idx2 = str(b_unique[0]).index(sub2)
+# length of substring 1 is added to
+# get string from next character
+Ques = str(b_unique[0])[idx1 + len(sub1): idx2]
 
 LOGO_URL = "https://www.ltl.uni-due.de/assets/images/logo3.png"
 description = """
@@ -115,34 +115,34 @@ with st.form("my_form"):
     isSubmitted = st.form_submit_button("Submit")
 
     # Every form must have a submit button.
-    # realans = []
-    # for i in Anse:
-    #     sub1 = ">"
-    #     sub2 = '</studentAnswer>'
-    #     # getting index of substrings
-    #     idx1 = str(i).index(sub1)
-    #     idx2 = str(i).index(sub2)
-    #     # length of substring 1 is added to
-    #     # get string from next character
-    #     res = str(i)[idx1 + len(sub1): idx2]
-    #     realans.append(res)
-    # if answer in realans:
-    #     answerStat = "correct"
-    # elif answer not in realans:
-    #     answerStat = "incorrect"
-    # response = openai.Completion.create(
-    #     engine="davinci",
-    #     prompt=f"Question: {Ques}\nStudentAnswer: {answer}\nTargetAnswer: {realans[0]}\nCorrect or Incorrect Explanation:",
-    #     temperature=1,
-    #     max_tokens=64,
-    #     top_p=1,
-    #     frequency_penalty=2,
-    #     presence_penalty=2,
-    #     stop=["\n"]
-    # )
+    realans = []
+    for i in Anse:
+        sub1 = ">"
+        sub2 = '</studentAnswer>'
+        # getting index of substrings
+        idx1 = str(i).index(sub1)
+        idx2 = str(i).index(sub2)
+        # length of substring 1 is added to
+        # get string from next character
+        res = str(i)[idx1 + len(sub1): idx2]
+        realans.append(res)
+    if answer in realans:
+        answerStat = "correct"
+    elif answer not in realans:
+        answerStat = "incorrect"
+    response = openai.Completion.create(
+        engine="davinci",
+        prompt=f"Question: {Ques}\nStudentAnswer: {answer}\nTargetAnswer: {realans[0]}\nCorrect or Incorrect Explanation:",
+        temperature=1,
+        max_tokens=64,
+        top_p=1,
+        frequency_penalty=2,
+        presence_penalty=2,
+        stop=["\n"]
+    )
 
 
-# @st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True)
 def load_feedback_form():
     with st.container():
         # explanation = response['choices'][0]['text']
@@ -164,11 +164,11 @@ def load_feedback_form():
             student_explanation = st.text_area("Student Explanation")
 
             feedbackFormSubmission = st.form_submit_button("Next Question")
-        # df = pd.read_csv('j.csv')
-        # # st.write(f'{student_explanation,star}')
-        # df2 = {'Question': Ques, 'student_answer': answer, 'correct_incorrect': answerStat,
-        #        'explanation': explanation, 'rating': star, 'student_explanation': studentExplanation}
-        # df.append(df2, ignore_index=True).to_csv('j.csv', index=False)
+        df = pd.read_csv('j.csv')
+        # st.write(f'{student_explanation,star}')
+        df2 = {'Question': Ques, 'student_answer': answer, 'correct_incorrect': answerStat,
+               'explanation': explanation, 'rating': star, 'student_explanation': studentExplanation}
+        df.append(df2, ignore_index=True).to_csv('j.csv', index=False)
 
     if feedbackFormSubmission:
         st.success(star)
