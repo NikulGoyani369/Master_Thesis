@@ -1,3 +1,4 @@
+# to create requirement.txt  pip freeze > requirements.txt
 altair==4.1.0
 argon2-cffi==20.1.0
 astor==0.8.1
@@ -69,7 +70,7 @@ pycparser==2.20
 pydeck==0.7.0
 Pygments==2.10.0
 pyparsing==2.4.7
-pypiwin32==223
+# pypiwin32==223
 pyrsistent==0.18.0
 python-dateutil==2.8.2
 pytz==2021.1
