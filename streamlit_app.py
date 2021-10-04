@@ -41,7 +41,7 @@ except IndexError:
 # Passing the stored data inside
 # the beautifulsoup parser, storing
 # the returned object
-# Bs_data = BeautifulSoup(data, "xml")
+Bs_data = BeautifulSoup(data, "xml")
 
 # # Finding all instances of tag
 # `unique`
