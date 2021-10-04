@@ -1,4 +1,5 @@
 # to create requirement.txt  pip freeze > requirements.txt
+# py -3 -m pip install "pywin32>=301"
 altair==4.1.0
 argon2-cffi==20.1.0
 astor==0.8.1
