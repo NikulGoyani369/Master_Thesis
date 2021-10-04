@@ -6,7 +6,7 @@ import os
 import pandas as pd
 import openai
 openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
-openai.api_key = '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'
+openai.api_key = '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'
 
 
 if 'count' not in st.session_state:
