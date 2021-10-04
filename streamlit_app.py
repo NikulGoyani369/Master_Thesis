@@ -6,7 +6,7 @@ import os
 import pandas as pd
 import openai
 openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
-openai.api_key = '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'
+openai.api_key = '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'
 
 
 if 'count' not in st.session_state:
@@ -117,7 +117,7 @@ with st.form("my_form"):
     question = f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {Ques}</p>"
     Q = Ques
 #     question = "<p style='outline-style: solid;padding:10px;outline-color: green;'> e.g. Explain why circuit 2 is not a short circuit.</p>"
-   
+
     components.html(question)
     st.subheader('Below student will write their answers')
     answer = st.text_input("Answer")
@@ -135,7 +135,7 @@ with st.form("my_form"):
         # get string from next character
         res = str(i)[idx1 + len(sub1): idx2]
         realans.append(res)
-    if  st.session_state['answer'] in realans:
+    if st.session_state['answer'] in realans:
         answerStat = "correct"
     elif st.session_state['answer'] not in realans:
         answerStat = "incorrect"
@@ -149,7 +149,6 @@ with st.form("my_form"):
         presence_penalty=2,
         stop=["\n"]
     )
-
 
 
 @st.cache(suppress_st_warning=True)
@@ -179,6 +178,7 @@ def load_feedback_form():
         df2 = {'Question': Ques, 'student_answer': st.session_state['answer'], 'correct_incorrect': answerStat,
                'explanation': explanation, 'rating': st.session_state.st, 'student_explanation': st.session_state.student_explanat}
         df.append(df2, ignore_index=True).to_csv('j.csv', index=False)
+
 
 if isSubmitted:
     load_feedback_form()
