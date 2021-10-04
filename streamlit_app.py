@@ -19,7 +19,7 @@ if 'count' not in st.session_state:
 
 def increment_counter():
     st.session_state.count += 1
-    st.session_state.answer = ''
+    st.session_state['answer'] = ''
     st.session_state.student_explanat = st.session_state.student_explanation
     st.session_state.st = st.session_state.star
 
@@ -136,13 +136,13 @@ with st.form("my_form"):
         # get string from next character
         res = str(i)[idx1 + len(sub1): idx2]
         realans.append(res)
-    if  st.session_state.answer in realans:
+    if  st.session_state['answer'] in realans:
         answerStat = "correct"
-    elif st.session_state.answer not in realans:
+    elif st.session_state['answer'] not in realans:
         answerStat = "incorrect"
     response = openai.Completion.create(
         engine="davinci",
-        prompt=f"Question: {Ques}\nStudentAnswer: {st.session_state.answer}\nTargetAnswer: {realans[0]}\nCorrect or Incorrect Explanation:",
+        prompt=f"Question: {Ques}\nStudentAnswer: {st.session_state['answer']}\nTargetAnswer: {realans[0]}\nCorrect or Incorrect Explanation:",
         temperature=1,
         max_tokens=64,
         top_p=1,
@@ -177,7 +177,7 @@ def load_feedback_form():
                 "Next Question", on_click=increment_counter)
         df = pd.read_csv('j.csv')
         # st.write(f'{student_explanation,star}')
-        df2 = {'Question': Ques, 'student_answer': st.session_state.answer, 'correct_incorrect': answerStat,
+        df2 = {'Question': Ques, 'student_answer': st.session_state['answer'], 'correct_incorrect': answerStat,
                'explanation': explanation, 'rating': st.session_state.st, 'student_explanation': st.session_state.student_explanat}
         df.append(df2, ignore_index=True).to_csv('j.csv', index=False)
 
