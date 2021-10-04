@@ -173,7 +173,8 @@ def load_feedback_form():
 
             st.text_area("Student Explanation", key='student_explanation')
 
-            feedbackFormSubmission = st.form_submit_button("Next Question")
+            feedbackFormSubmission = st.form_submit_button(
+                "Next Question", on_click=increment_counter)
         df = pd.read_csv('j.csv')
         # st.write(f'{student_explanation,star}')
         df2 = {'Question': Ques, 'student_answer': st.session_state.answer, 'correct_incorrect': answerStat,
