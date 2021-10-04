@@ -179,12 +179,6 @@ def load_feedback_form():
                'explanation': explanation, 'rating': st.session_state.st, 'student_explanation': st.session_state.student_explanat}
         df.append(df2, ignore_index=True).to_csv('j.csv', index=False)
 
-    if feedbackFormSubmission:
-        st.success(star)
-        st.success(student_explanation)
-    # st.button("Submit")
-
-
 if isSubmitted:
     load_feedback_form()
 
