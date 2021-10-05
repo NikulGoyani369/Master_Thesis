@@ -14,6 +14,7 @@ if 'count' not in st.session_state:
     st.session_state.student_explanat = 'first time'
     st.session_state.st = 'first time'
 
+
 def increment_counter():
     st.session_state.count += 1
     st.session_state.answer = ''
@@ -21,15 +22,14 @@ def increment_counter():
     st.session_state.st = st.session_state.star
 
 # this parth for local machine
-FILEs = glob.glob("/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
-    glob.glob(
-        "/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+# FILEs = glob.glob("/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
+#     glob.glob(
+#         "/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 
 # this parth for Live searver
-# FILEs = glob.glob("./semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
-#     glob.glob(
-#         "./semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+FILEs = glob.glob("./semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
+    glob.glob("./semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 try:
     f = open(f'{FILEs[st.session_state.count]}', 'r')
@@ -121,7 +121,6 @@ with st.form("my_form"):
     answer = st.text_input("Answer")
     isSubmitted = st.form_submit_button("Submit")
 
-
     # Every form must have a submit button.
     realans = []
     for i in Anse:
@@ -150,6 +149,8 @@ with st.form("my_form"):
     )
 
 # @st.cache(suppress_st_warning=True)
+
+
 def load_feedback_form():
     with st.container():
         st.subheader(
@@ -172,7 +173,7 @@ def load_feedback_form():
             feedbackFormSubmission = st.form_submit_button(
                 "Next Question", on_click=increment_counter)
         df = pd.read_csv('j.csv')
-        # st.write(f'{student_explanation,star}') 
+        # st.write(f'{student_explanation,star}')
         df2 = {'Question': Ques, 'student_answer': st.session_state.answer, 'correct_incorrect': answerStat,
                'explanation': explanation, 'rating': st.session_state.st, 'student_explanation': st.session_state.student_explanat}
         df.append(df2, ignore_index=True).to_csv('j.csv', index=False)
