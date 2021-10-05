@@ -6,7 +6,7 @@ import os
 import pandas as pd
 import openai
 # openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
-openai.api_key = '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'
+openai.api_key = os.getenv('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')
 
 
 if 'count' not in st.session_state:
@@ -131,7 +131,7 @@ with st.form("my_form"):
         top_p=1,
         frequency_penalty=2,
         presence_penalty=2,
-        stop=["\n"]
+        stop=["\n\n"]
     )
 
 
