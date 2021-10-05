@@ -5,16 +5,14 @@ import glob
 import os
 import pandas as pd
 import openai
-# openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
-openai.api_key = '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'
+openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
+openai.api_key = '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'
 
 
 if 'count' not in st.session_state:
     st.session_state.count = 0
     st.session_state.student_explanat = 'first time'
     st.session_state.st = 'first time'
-    # st.session_state['answer'] = ''
-
 
 def increment_counter():
     st.session_state.count += 1
@@ -23,15 +21,15 @@ def increment_counter():
     st.session_state.st = st.session_state.star
 
 # this parth for local machine
-# FILEs = glob.glob("/Users/Nikul/Documents/Master_Thesis_Work_Nikul/1 Master Thesis/Prof Torsten Thesis 2021/Thesis programming/Master_Thesis/semeval2013-Task7-2and3way*/2way/*/*.xml") + \
-#     glob.glob(
-#         "/Users/Nikul/Documents/Master_Thesis_Work_Nikul/1 Master Thesis/Prof Torsten Thesis 2021/Thesis programming/Master_Thesis/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+FILEs = glob.glob("/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
+    glob.glob(
+        "/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 
 # this parth for Live searver
-FILEs = glob.glob("./semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
-    glob.glob(
-        "./semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+# FILEs = glob.glob("./semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
+#     glob.glob(
+#         "./semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 try:
     f = open(f'{FILEs[st.session_state.count]}', 'r')
@@ -123,6 +121,7 @@ with st.form("my_form"):
     answer = st.text_input("Answer")
     isSubmitted = st.form_submit_button("Submit")
 
+
     # Every form must have a submit button.
     realans = []
     for i in Anse:
@@ -141,7 +140,7 @@ with st.form("my_form"):
         answerStat = "incorrect"
     response = openai.Completion.create(
         engine="davinci",
-        prompt=f"Question: {Ques}\nStudentAnswer: {st.session_state['answer']}\nTargetAnswer: {realans[0]}\nCorrect or Incorrect Explanation:",
+        prompt=f"Question: {Ques}\nStudentAnswer: {st.session_state.answer}\nTargetAnswer: {realans[0]}\nCorrect or Incorrect Explanation:",
         temperature=1,
         max_tokens=64,
         top_p=1,
@@ -150,8 +149,7 @@ with st.form("my_form"):
         stop=["\n"]
     )
 
-
-@st.cache(suppress_st_warning=True)
+# @st.cache(suppress_st_warning=True)
 def load_feedback_form():
     with st.container():
         st.subheader(
