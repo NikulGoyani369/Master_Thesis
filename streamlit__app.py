@@ -5,11 +5,8 @@ import glob
 import os
 import pandas as pd
 import openai
-openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
+# openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
 openai.api_key = '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'
-
-
-# openai.api_key = os.getenv('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')
 
 
 if 'count' not in st.session_state:
