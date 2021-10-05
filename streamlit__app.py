@@ -5,8 +5,8 @@ import glob
 import os
 import pandas as pd
 import openai
-openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
-openai.api_key = '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'
+# openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
+openai.api_key = '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'
 
 
 # openai.api_key = os.getenv('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')
