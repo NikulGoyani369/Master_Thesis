@@ -6,19 +6,19 @@ import os
 import pandas as pd
 import openai
 # openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
-openai.api_key =  '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'
+openai.api_key = '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'
 
 
 if 'count' not in st.session_state:
     st.session_state.count = 0
     st.session_state.student_explanat = 'first time'
     st.session_state.st = 'first time'
-    st.session_state['answer'] = ''
+    # st.session_state['answer'] = ''
 
 
 def increment_counter():
     st.session_state.count += 1
-    st.session_state['answer'] = ''
+    st.session_state.answer = ''
     st.session_state.student_explanat = st.session_state.student_explanation
     st.session_state.st = st.session_state.star
 
@@ -135,9 +135,9 @@ with st.form("my_form"):
         # get string from next character
         res = str(i)[idx1 + len(sub1): idx2]
         realans.append(res)
-    if st.session_state['answer'] in realans:
+    if st.session_state.answer in realans:
         answerStat = "correct"
-    elif st.session_state['answer'] not in realans:
+    elif st.session_state.answer not in realans:
         answerStat = "incorrect"
     response = openai.Completion.create(
         engine="davinci",
@@ -174,8 +174,8 @@ def load_feedback_form():
             feedbackFormSubmission = st.form_submit_button(
                 "Next Question", on_click=increment_counter)
         df = pd.read_csv('j.csv')
-        # st.write(f'{student_explanation,star}')
-        df2 = {'Question': Ques, 'student_answer': st.session_state['answer'], 'correct_incorrect': answerStat,
+        # st.write(f'{student_explanation,star}') 
+        df2 = {'Question': Ques, 'student_answer': st.session_state.answer, 'correct_incorrect': answerStat,
                'explanation': explanation, 'rating': st.session_state.st, 'student_explanation': st.session_state.student_explanat}
         df.append(df2, ignore_index=True).to_csv('j.csv', index=False)
 
