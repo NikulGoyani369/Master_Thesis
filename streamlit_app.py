@@ -6,7 +6,7 @@ import os
 import pandas as pd
 import openai
 # openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
-openai.api_key = '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'
+openai.api_key = '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'
 
 
 if 'count' not in st.session_state:
@@ -100,7 +100,7 @@ resultAndExplanationHTML = """
 <br>
 <div class="card mb-12 shadow-sm">
     <div class="card-header">
-        <small style="float:center; font-size:20px; "  class="text-muted">What do you think this explanation is good. Why not?<br>Below write your explanation.</small>
+        <h3 style="float:center; font-size:20px; "class="text-muted">What do you think this explanation is good. Why not?<br>Below write your explanation.</h3>
     </div>
 </div>
 """
