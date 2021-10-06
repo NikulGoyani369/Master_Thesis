@@ -7,8 +7,8 @@ import pandas as pd
 import openai
 # openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
 # openai.api_key = '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'
-openai.api_key = os.getenv("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")
-openai.Engine.list()
+openai.api_key = os.getenv("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")
+openai.Engine.retrieve("davinci")
 
 if 'count' not in st.session_state:
     st.session_state.count = 0
