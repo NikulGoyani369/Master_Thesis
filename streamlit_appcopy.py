@@ -6,7 +6,7 @@ import os
 import pandas as pd
 import openai
 # openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
-openai.api_key = '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'
+openai.api_key = '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'
 
 
 if 'count' not in st.session_state:
@@ -59,17 +59,17 @@ idx2 = str(b_unique[0]).index(sub2)
 Ques = str(b_unique[0])[idx1 + len(sub1): idx2]
 
 
-LOGO_URL = "https://www.ltl.uni-due.de/assets/images/logo3.png"
-description = """
-<h2>Master Thesis Topic:- Collecting and analyse automatically generated feedback explanations</h2>
-<p style='outline-style: solid;padding:10px;outline-color: green; font-size:16px; text-align: center; font-family:'Open Sans', sans-serif; '> <b>PROTECTION OF DATA:-</b><br>
-<ol style='font-size:18px;font-family: "Source Sans Pro", sans-serif;'>
-  <li>The owners of this website take the security of your personal information very seriously. We handle your personal data with confidentiality and in compliance with the applicable data protection laws and this data protection statement.</li>
-  <li>Various personal data are gathered when you use this website. Personal data are pieces of information that may be used to identify you personally. This data protection statement outlines what information we gather and how we utilize it. It also discusses why and how this is accomplished.</li>
-  <li>We'd like to emphasize that data transfer via the Internet (for example, while interacting through e-mail) may have security flaws. It is not feasible to completely secure data from unauthorized access.</li>
-</ol>
-</p>
-"""
+# LOGO_URL = "https://www.ltl.uni-due.de/assets/images/logo3.png"
+# description = """
+# <h2>Master Thesis Topic:- Collecting and analyse automatically generated feedback explanations</h2>
+# <p style='outline-style: solid;padding:10px;outline-color: green; font-size:16px; text-align: center; font-family:'Open Sans', sans-serif; '> <b>PROTECTION OF DATA:-</b><br>
+# <ol style='font-size:18px;font-family: "Source Sans Pro", sans-serif;'>
+#   <li>The owners of this website take the security of your personal information very seriously. We handle your personal data with confidentiality and in compliance with the applicable data protection laws and this data protection statement.</li>
+#   <li>Various personal data are gathered when you use this website. Personal data are pieces of information that may be used to identify you personally. This data protection statement outlines what information we gather and how we utilize it. It also discusses why and how this is accomplished.</li>
+#   <li>We'd like to emphasize that data transfer via the Internet (for example, while interacting through e-mail) may have security flaws. It is not feasible to completely secure data from unauthorized access.</li>
+# </ol>
+# </p>
+# """
 
 resultAndExplanationHTML = """
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -107,8 +107,8 @@ resultAndExplanationHTML = """
 </div>
 """
 
-st.image(use_column_width=True, image=LOGO_URL)
-components.html(description, height=340, width=700, scrolling=True)
+# st.image(use_column_width=True, image=LOGO_URL)
+# components.html(description, height=340, width=700, scrolling=True)
 
 st.markdown("___")
 with st.form("my_form"):
