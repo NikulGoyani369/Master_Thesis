@@ -9,7 +9,7 @@ import  requests
 # openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
 # openai.api_key = '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'
 
-api_key = os.getenv("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")
+api_key = os.getenv("OPENAI_API_KEY")
 
 r = requests.get("https://api.openai.com/v1/engines/davinci/completions/browser_stream",
   headers={
