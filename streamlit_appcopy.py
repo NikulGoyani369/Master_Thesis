@@ -5,29 +5,9 @@ import glob
 import os
 import pandas as pd
 import openai
-import  requests
 # openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
 # openai.api_key = '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'
-
-api_key = os.getenv("OPENAI_API_KEY")
-
-r = requests.get("https://api.openai.com/v1/engines/davinci/completions/browser_stream",
-  headers={
-    "Authorization": f"Bearer {api_key}"
-  },
-  stream=True,
-  params={
-        # "engine":davinci,
-        "prompt": 'f"Question: {Ques}\nStudentAnswer: {st.session_state.answer}\nTargetAnswer: {realans[0]}\nCorrect or Incorrect Explanation:"',
-        "temperature":1,
-        "max_tokens":64,
-        "top_p":1,
-        "frequency_penalty":2,
-        "presence_penalty":2,
-        "stop":["\n"]
-})
-for line in r:
-  print(line)
+openai.api_key =  st.secrets['OPENAI_API_KEY']
 
 
 if 'count' not in st.session_state:
@@ -158,7 +138,16 @@ with st.form("my_form"):
         answerStat = "correct"
     elif st.session_state.answer not in realans:
         answerStat = "incorrect"
-    response = r 
+    response = openai.Completion.create(
+        engine="davinci",
+        prompt=f"Question: {Ques}\nStudentAnswer: {st.session_state.answer}\nTargetAnswer: {realans[0]}\nCorrect or Incorrect Explanation:",
+        temperature=1,
+        max_tokens=64,
+        top_p=1,
+        frequency_penalty=2,
+        presence_penalty=2,
+        stop=["\n"]
+    )
 
 # @st.cache(suppress_st_warning=True)
 
@@ -167,7 +156,7 @@ def load_feedback_form():
     with st.container():
         st.subheader(
             'Below we will show the Target_answer and result from a dataset with an explanation generated from the NLP model')
-        explanation = ['choices'][0]['text']
+        explanation = response['choices'][0]['text']
         components.html(resultAndExplanationHTML.format(answerStatus=answerStat,
                         explanation=explanation, reference_ans=realans[0]), height=500, scrolling=True)
         st.write(
