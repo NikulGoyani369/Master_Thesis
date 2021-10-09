@@ -154,9 +154,10 @@ with st.form("my_form"):
 
 def load_feedback_form():
     with st.container():
+        explanation = response['choices'][0]['text']
         st.subheader(
             'Below we will show the Target_answer and result from a dataset with an explanation generated from the NLP model')
-        explanation = response['choices'][0]['text']
+        
         components.html(resultAndExplanationHTML.format(answerStatus=answerStat,
                         explanation=explanation, reference_ans=realans[0]), height=500, scrolling=True)
         st.write(
