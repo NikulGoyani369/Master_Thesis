@@ -151,7 +151,7 @@ with st.form("my_form"):
 
 # @st.cache(suppress_st_warning=True)
 
-@st.cache(suppress_st_warning=True)
+
 def load_feedback_form():
     with st.container():
         explanation = response['choices'][0]['text']
