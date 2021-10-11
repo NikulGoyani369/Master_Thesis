@@ -5,8 +5,6 @@ import glob
 import os
 import pandas as pd
 import openai
-# openai.organization = 'org-5p4uM0nHTES2niAIq4uMldR6'
-# openai.api_key = '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'
 openai.api_key =  st.secrets['OPENAI_API_KEY']
 
 
