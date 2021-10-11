@@ -174,11 +174,11 @@ def load_feedback_form():
 
             feedbackFormSubmission = st.form_submit_button(
                 "Next Question", on_click=increment_counter)
-        df = pd.read_csv("data/j.csv")
+        df = pd.read_csv("./data/j.csv")
         # st.write(f'{student_explanation,star}')
         df2 = {'Question': Ques, 'student_answer': st.session_state.answer, 'correct_incorrect': answerStat,
                'explanation': explanation, 'rating': st.session_state.st, 'student_explanation': st.session_state.student_explanat}
-        df.append(df2, ignore_index=True).to_csv("data/j.csv", index=False)
+        df.append(df2, ignore_index=True).to_csv("./data/j.csv", index=False)
         st.write(df2)
 if isSubmitted:
     load_feedback_form()
