@@ -138,7 +138,7 @@ with st.form("my_form"):
         answerStat = "incorrect"
     response = openai.Completion.create(
         engine="davinci",
-        prompt=f"Question: {Ques}\nStudentAnswer: {st.session_state.answer}\nTargetAnswer: {realans[0]}\n",
+        prompt=f"Question: {Ques}\nStudentAnswer: {st.session_state.answer}\nTargetAnswer: {realans[0]}\nExplanation",
         temperature=1,
         max_tokens=64,
         top_p=1,
