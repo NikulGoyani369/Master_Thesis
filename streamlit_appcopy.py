@@ -113,12 +113,12 @@ resultAndExplanationHTML = """
 
 st.markdown("___")
 with st.form("my_form"):
-    st.subheader('Below we will show the all questions come form dataset')
+    # st.subheader('Below we will show the all questions come form dataset')
     st.write("Question")
     question = f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {Ques}</p>"
     Q = Ques
     components.html(question)
-    st.subheader('Below student will write their answers')
+    # st.subheader('Below student will write their answers')
     st.text_input("Answer", key='answer')
     isSubmitted = st.form_submit_button("Submit")
 
@@ -155,8 +155,8 @@ with st.form("my_form"):
 def load_feedback_form():
     with st.container():
         explanation = response['choices'][0]['text']
-        st.subheader(
-            'Below we will show the Target_answer and result from a dataset with an explanation generated from the NLP model')
+        # st.subheader(
+        #     'Below we will show the Target_answer and result from a dataset with an explanation generated from the NLP model')
         
         components.html(resultAndExplanationHTML.format(answerStatus=answerStat,
                         explanation=explanation, reference_ans=realans[0]), height=500, scrolling=True)
