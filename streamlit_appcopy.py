@@ -151,7 +151,7 @@ with st.form("my_form"):
 
 # @st.cache(suppress_st_warning=True)
 
-
+@st.cache(suppress_st_warning=True)
 def load_feedback_form():
     with st.container():
         explanation = response['choices'][0]['text']
@@ -179,7 +179,6 @@ def load_feedback_form():
         df2 = {'Question': Ques, 'student_answer': st.session_state.answer, 'correct_incorrect': answerStat,
                'explanation': explanation, 'rating': st.session_state.st, 'student_explanation': st.session_state.student_explanat}
         df.append(df2, ignore_index=True).to_csv("./data/j.csv", index=False)
-
 
 if isSubmitted:
     load_feedback_form()
