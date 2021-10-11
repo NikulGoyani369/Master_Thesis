@@ -172,7 +172,7 @@ def load_feedback_form():
 
             feedbackFormSubmission = st.form_submit_button(
                 "Next Question", on_click=increment_counter)
-        df = pd.read_csv("https://github.com/NikulGoyani369/Master_Thesis/blob/611dbc573c787aba202bb521e0fa14bc4f9c190b/data/j.csv")
+        df = pd.read_csv("https://github.com/NikulGoyani369/Master_Thesis/blob/611dbc573c787aba202bb521e0fa14bc4f9c190b/data/j.csv", header=None)
         # st.write(f'{student_explanation,star}')
         df2 = {'Question': Ques, 'student_answer': st.session_state.answer, 'correct_incorrect': answerStat,
                'explanation': explanation, 'rating': st.session_state.st, 'student_explanation': st.session_state.student_explanat}
