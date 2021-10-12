@@ -5,6 +5,7 @@ import glob
 import os
 import pandas as pd
 import openai
+import base64
 openai.api_key =  st.secrets['OPENAI_API_KEY']
 
 
@@ -179,17 +180,17 @@ def load_feedback_form():
         df.append(df2, ignore_index=True).to_csv("tmp/data/j.csv", index=False)
         st.write(df)
 
-        # download=st.button('Download Excel File')
-        # if download:
-        #     'Download Started!'
-        #     liste= df2
-        #     df_download= pd.DataFrame(liste)
-        #     df_download.columns= df
-        #     df_download
-        #     csv = df_download.to_csv(index=False)
-        #     b64 = base64.b64encode(csv.encode()).decode()  # some strings
-        #     linko= f'<a href="data:file/csv;base64,{b64}" download="myfilename.csv">Download csv file</a>'
-        #     st.markdown(linko, unsafe_allow_html=True)
+        download=st.button('Download Excel File')
+        if download:
+            'Download Started!'
+            liste= df
+            df_download= pd.DataFrame(liste)
+            df_download.columns= df
+            df_download
+            csv = df_download.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # some strings
+            linko= f'<a href="data:file/csv;base64,{b64}" download="myfilename.csv">Download csv file</a>'
+            st.markdown(linko, unsafe_allow_html=True)
 
 if isSubmitted:
     load_feedback_form()
