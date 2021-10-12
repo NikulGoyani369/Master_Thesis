@@ -183,7 +183,7 @@ def load_feedback_form():
         download=st.button('Download Excel File')
         if download:
             'Download Started!'
-            liste= df
+            liste= df2
             df_download= pd.DataFrame(liste)
             df_download.columns= df
             df_download
