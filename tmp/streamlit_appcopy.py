@@ -21,14 +21,14 @@ def increment_counter():
     st.session_state.st = st.session_state.star
 
 # this parth for local machine
-FILEs = glob.glob("/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
-    glob.glob(
-        "/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+# FILEs = glob.glob("/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
+#     glob.glob(
+#         "/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 
 # this parth for Live searver
-# FILEs = glob.glob("./tmp/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
-#     glob.glob("./tmp/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+FILEs = glob.glob("./tmp/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
+    glob.glob("./tmp/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 
 try:
