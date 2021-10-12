@@ -21,14 +21,14 @@ def increment_counter():
     st.session_state.st = st.session_state.star
 
 # this parth for local machine
-# FILEs = glob.glob("/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
-#     glob.glob(
-#         "/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+FILEs = glob.glob("/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
+    glob.glob(
+        "/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 
 # this parth for Live searver
-FILEs = glob.glob("./tmp/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
-    glob.glob("./tmp/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+# FILEs = glob.glob("./tmp/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
+#     glob.glob("./tmp/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 
 try:
@@ -172,11 +172,24 @@ def load_feedback_form():
 
             feedbackFormSubmission = st.form_submit_button(
                 "Next Question", on_click=increment_counter)
-        df = pd.read_csv("tmp/data/j.csv")
+        df = pd.read_csv("data/j.csv")
         # st.write(f'{student_explanation,star}')
         df2 = {'Question': Ques, 'student_answer': st.session_state.answer, 'correct_incorrect': answerStat,
                'explanation': explanation, 'rating': st.session_state.st, 'student_explanation': st.session_state.student_explanat}
-        df.append(df2, ignore_index=True).to_csv("tmp/data/j.csv", index=False)
-        st.write(df)
+        df.append(df2, ignore_index=True).to_csv("data/j.csv", index=False)
+        # st.write(df)
+
+        download=st.button('Download Excel File')
+        if download:
+            'Download Started!'
+            liste= df2
+            df_download= pd.DataFrame(liste)
+            df_download.columns= df
+            df_download
+            csv = df_download.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # some strings
+            linko= f'<a href="data:file/csv;base64,{b64}" download="myfilename.csv">Download csv file</a>'
+            st.markdown(linko, unsafe_allow_html=True)
+
 if isSubmitted:
     load_feedback_form()
