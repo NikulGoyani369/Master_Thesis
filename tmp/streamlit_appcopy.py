@@ -177,13 +177,13 @@ def load_feedback_form():
         # st.write(f'{student_explanation,star}')
         df2 = {'Question': Ques, 'student_answer': st.session_state.answer, 'correct_incorrect': answerStat,
                'explanation': explanation, 'rating': st.session_state.st, 'student_explanation': st.session_state.student_explanat}
-        df.append(df2, ignore_index=True).to_csv("tmp/data/j.csv", index=False)
+        df3 = df.append(df2, ignore_index=True).to_csv("tmp/data/j.csv", index=False)
         st.write(df)
 
         download=st.button('Download Excel File')
         if download:
             'Download Started!'
-            liste= df2
+            liste= df3
             df_download= pd.DataFrame(liste)
             df_download.columns= df
             df_download
