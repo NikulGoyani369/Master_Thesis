@@ -180,7 +180,7 @@ def load_feedback_form():
         df.append(df2, ignore_index=True).to_csv("tmp/data/j.csv", index=False)
         st.write(df)
 
-        download=st.button_download('Download CSV File')
+        download=st.button('Download CSV File')
         if download:
             'Download Started!'
             liste= df
