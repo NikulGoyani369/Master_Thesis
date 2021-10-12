@@ -180,17 +180,17 @@ def load_feedback_form():
         df.append(df2, ignore_index=True).to_csv("tmp/data/j.csv", index=False)
         st.write(df)
 
-        # download=st.button('Download CSV File')
-        # if download:
-        #     'Download Started!'
-        #     liste= df3
-        #     df_download= pd.DataFrame(liste)
-        #     df_download.columns= df3
-        #     df_download
-        #     csv = df_download.to_csv(index=False)
-        #     b64 = base64.b64encode(csv.encode()).decode()  # some strings
-        #     linko= f'<a href="data:file/csv;base64,{b64}" download="myfilename.csv">Download csv file</a>'
-        #     st.markdown(linko, unsafe_allow_html=True)
+        download=st.button('Download CSV File')
+        if download:
+            'Download Started!'
+            liste= df
+            df_download= pd.DataFrame(liste)
+            df_download.columns= df
+            df_download
+            csv = df_download.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # some strings
+            linko= f'<a href="data:file/csv;base64,{b64}" download="myfilename.csv">Download csv file</a>'
+            st.markdown(linko, unsafe_allow_html=True)
         # def get_table_download_link_csv(df):
         #     #csv = df.to_csv(index=False)
         #     csv = df.to_csv(df).encode()
