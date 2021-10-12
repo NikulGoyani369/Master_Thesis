@@ -177,12 +177,12 @@ def load_feedback_form():
         # st.write(f'{student_explanation,star}')
         df2 = {'Question': Ques, 'student_answer': st.session_state.answer, 'correct_incorrect': answerStat,
                'explanation': explanation, 'rating': st.session_state.st, 'student_explanation': st.session_state.student_explanat}
-        df3 = df.append(df2, ignore_index=True).to_csv("tmp/data/j.csv", index=False, storage_options= self.storage_options)
+        df.append(df2, ignore_index=True).to_csv("tmp/data/j.csv", index=False, storage_options= self.storage_options)
         st.write(df)
 
         def get_table_download_link_csv(df):
             #csv = df.to_csv(index=False)
-            csv = df.to_csv(df3).encode()
+            csv = df.to_csv(df).encode()
             #b64 = base64.b64encode(csv.encode()).decode() 
             b64 = base64.b64encode(csv).decode()
             href = f'<a href="data:file/csv;base64,{b64}" download="captura.csv" target="_blank">Download csv file</a>'
