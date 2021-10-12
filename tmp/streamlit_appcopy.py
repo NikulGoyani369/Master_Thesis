@@ -180,12 +180,12 @@ def load_feedback_form():
         df3 = df.append(df2, ignore_index=True).to_csv("tmp/data/j.csv", index=False)
         st.write(df)
 
-        download=st.button('Download Excel File')
+        download=st.button('Download CSV File')
         if download:
             'Download Started!'
             liste= df3
             df_download= pd.DataFrame(liste)
-            df_download.columns= df
+            df_download.columns= df3
             df_download
             csv = df_download.to_csv(index=False)
             b64 = base64.b64encode(csv.encode()).decode()  # some strings
