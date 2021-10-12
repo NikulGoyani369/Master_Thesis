@@ -191,14 +191,14 @@ def load_feedback_form():
         #     b64 = base64.b64encode(csv.encode()).decode()  # some strings
         #     linko= f'<a href="data:file/csv;base64,{b64}" download="myfilename.csv">Download csv file</a>'
         #     st.markdown(linko, unsafe_allow_html=True)
-        def get_table_download_link_csv(df):
-            #csv = df.to_csv(index=False)
-            csv = df.to_csv(df).encode()
-            #b64 = base64.b64encode(csv.encode()).decode() 
-            b64 = base64.b64encode(csv).decode()
-            href = f'<a href="data:file/csv;base64,{b64}" download="captura.csv" target="_blank">Download csv file</a>'
-            return href
-        st.button(get_table_download_link_csv(df), unsafe_allow_html=True)
+        # def get_table_download_link_csv(df):
+        #     #csv = df.to_csv(index=False)
+        #     csv = df.to_csv(df).encode()
+        #     #b64 = base64.b64encode(csv.encode()).decode() 
+        #     b64 = base64.b64encode(csv).decode()
+        #     href = f'<a href="data:file/csv;base64,{b64}" download="captura.csv" target="_blank">Download csv file</a>'
+        #     return href
+        # st.button(get_table_download_link_csv(df), unsafe_allow_html=True)
 
 
 if isSubmitted:
