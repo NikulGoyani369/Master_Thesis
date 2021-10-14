@@ -1,4 +1,6 @@
+from typing import Any
 import streamlit as st
+import s3fs
 import streamlit.components.v1 as components
 from bs4 import BeautifulSoup
 import glob
@@ -6,30 +8,62 @@ import os
 import pandas as pd
 import openai
 import base64
-openai.api_key =  st.secrets['OPENAI_API_KEY']
+openai.api_key = st.secrets['OPENAI_API_KEY']
+
+fs = s3fs.S3FileSystem(anon=False)
+
+# Retrieve file contents.
+# Uses st.cache to only rerun when the query changes or after 10 min.
+
+
+def write_df_to_file(csv_line):
+    file_name = 'my-master-thesis/test.csv'
+    with fs.open(file_name, 'a') as f:
+        f.write(csv_line)
+        f.flush()
+        f.close()
+    fs.du(file_name)
 
 
 if 'count' not in st.session_state:
     st.session_state.count = 0
-    st.session_state.student_explanat = 'first time'
-    st.session_state.st = 'first time'
+    st.session_state.answer = ''
+    st.session_state.explanation = ''
+    st.session_state.rating = ''
+    st.session_state.student_explanation = ''
+
+
+def after_submit():
+    write_df_to_file(create_csv())
+    increment_counter()
+
+
+def create_csv():
+    csv_line = pd.DataFrame({
+        'Question': [Ques],
+        'student_answer': [st.session_state.answer],
+        'correct_incorrect': [answerStat],
+        'explanation': [st.session_state.explanation],
+        'rating': [st.session_state.rating],
+        'student_explanation': [st.session_state.student_explanation]
+    }).to_csv(header=False, index=False)
+
+    return csv_line
 
 
 def increment_counter():
     st.session_state.count += 1
     st.session_state.answer = ''
-    st.session_state.student_explanat = st.session_state.student_explanation
-    st.session_state.st = st.session_state.star
-
-# this parth for local machine
-# FILEs = glob.glob("/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
-#     glob.glob(
-#         "/Users/Nikul/Downloads/inner/inner/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+    st.session_state.student_explanation = ''
+    st.session_state.rating = '1 Star'
 
 
-# this parth for Live searver
-FILEs = glob.glob("./tmp/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
-    glob.glob("./tmp/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+def for_server():
+    return glob.glob("./tmp/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
+        glob.glob("./tmp/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+
+
+FILEs = for_server()
 
 
 try:
@@ -57,7 +91,7 @@ idx2 = str(b_unique[0]).index(sub2)
 # length of substring 1 is added to
 # get string from next character
 Ques = str(b_unique[0])[idx1 + len(sub1): idx2]
-
+currentCsvLine = ""
 
 # LOGO_URL = "https://www.ltl.uni-due.de/assets/images/logo3.png"
 # description = """
@@ -153,53 +187,34 @@ with st.form("my_form"):
 
 def load_feedback_form():
     with st.container():
+
         explanation = response['choices'][0]['text']
-        # st.subheader(
-        #     'Below we will show the Target_answer and result from a dataset with an explanation generated from the NLP model')
-        
-        components.html(resultAndExplanationHTML.format(answerStatus=answerStat,
-                        explanation=explanation, reference_ans=realans[0]), height=500, scrolling=True)
+        save_exp_to_session(explanation)
+        components.html(
+            resultAndExplanationHTML.format(
+                answerStatus=answerStat,
+                explanation=explanation,
+                reference_ans=realans[0]
+            ),
+            height=500,
+            scrolling=True
+        )
         st.write(
             '<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
         st.write(
             '<style>div.row-widget.stButton > div{flex-direction:row;}</style>', unsafe_allow_html=True)
         with st.form("feedbackform"):
             radioOptions = ['1 Star', '2 Star', '3 Star', '4 Star', '5 Star']
-            # radioOptions = ['10 Star', '9 Star', '8 Star', '7 Star', '6 Star', '5 Star', '4 Star', '3 Star', '2 Star',
-            #                 '1 Star']
-            st.radio("Select Rating", radioOptions, key='star')
+            st.radio("Select Rating", radioOptions, key='rating')
 
             st.text_area("Student Explanation", key='student_explanation')
 
-            feedbackFormSubmission = st.form_submit_button(
-                "Next Question", on_click=increment_counter)
-        df = pd.read_csv("tmp/data/j.csv")
-        # st.write(f'{student_explanation,star}')
-        df2 = {'Question': Ques, 'student_answer': st.session_state.answer, 'correct_incorrect': answerStat,
-               'explanation': explanation, 'rating': st.session_state.st, 'student_explanation': st.session_state.student_explanat}
-        df.append(df2, ignore_index=True).to_csv("tmp/data/j.csv", index=False)
-        st.write(df)
+            st.form_submit_button(
+                "Next Question", on_click=after_submit)
 
-        # download=st.button('Download CSV File')
-        # if download:
-        #     'Download Started!'
-        #     liste= df
-        #     df_download= pd.DataFrame(liste)
-        #     df_download.columns= df
-        #     df_download
-        #     csv = df_download.to_csv(index=False)
-        #     b64 = base64.b64encode(csv.encode()).decode()  # some strings
-        #     linko= f'<a href="data:file/csv;base64,{b64}" download="myfilename.csv">Download csv file</a>'
-        #     st.markdown(linko, unsafe_allow_html=True)
-        #     return linko
-        # def get_table_download_link_csv(df):
-        #     #csv = df.to_csv(index=False)
-        #     csv = df.to_csv(df).encode()
-        #     #b64 = base64.b64encode(csv.encode()).decode() 
-        #     b64 = base64.b64encode(csv).decode()
-        #     href = f'<a href="data:file/csv;base64,{b64}" download="captura.csv" target="_blank">Download csv file</a>'
-        #     return href
-        # st.button(get_table_download_link_csv(df), unsafe_allow_html=True)
+
+def save_exp_to_session(exp):
+    st.session_state.explanation = exp
 
 
 if isSubmitted:

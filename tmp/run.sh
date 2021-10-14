@@ -1,0 +1,1 @@
+streamlit run streamlit_appcopy.py
