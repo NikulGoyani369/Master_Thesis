@@ -1,28 +1,17 @@
 from typing import Any
 import streamlit as st
-import s3fs
 import streamlit.components.v1 as components
 from bs4 import BeautifulSoup
 import glob
 import os
 import pandas as pd
 import openai
-import base64
+import pymongo as mongo
+
+
 openai.api_key = st.secrets['OPENAI_API_KEY']
 
-fs = s3fs.S3FileSystem(anon=False)
-
-# Retrieve file contents.
-# Uses st.cache to only rerun when the query changes or after 10 min.
-
-
-def write_df_to_file(csv_line):
-    file_name = 'my-master-thesis/test.csv'
-    with fs.open(file_name, 'a') as f:
-        f.write(csv_line)
-        f.flush()
-        f.close()
-    fs.du(file_name)
+client = mongo.MongoClient(**st.secrets["mongo"])
 
 
 if 'count' not in st.session_state:
@@ -34,21 +23,25 @@ if 'count' not in st.session_state:
 
 
 def after_submit():
-    write_df_to_file(create_csv())
+    write_to_db(create_dict())
     increment_counter()
 
 
-def create_csv():
-    csv_line = pd.DataFrame({
-        'Question': [Ques],
+def write_to_db(dict_to_save):
+    db = client.nlp_db
+    csv_collection = db.csv_collection
+    return csv_collection.insert_one(dict_to_save)
+
+
+def create_dict():
+    return {
+        'question': [Ques],
         'student_answer': [st.session_state.answer],
         'correct_incorrect': [answerStat],
         'explanation': [st.session_state.explanation],
         'rating': [st.session_state.rating],
         'student_explanation': [st.session_state.student_explanation]
-    }).to_csv(header=False, index=False)
-
-    return csv_line
+    }
 
 
 def increment_counter():
