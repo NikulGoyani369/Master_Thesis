@@ -24,6 +24,7 @@ if 'count' not in st.session_state:
 
 def after_submit():
     write_to_db(create_dict())
+    st.session_state.answer = ''
     increment_counter()
 
 
