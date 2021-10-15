@@ -1,105 +1,19 @@
-from typing import Any
-import streamlit as st
-import streamlit.components.v1 as components
-from bs4 import BeautifulSoup
 import glob
-import os
-import pandas as pd
+import streamlit as st
 import openai
 import pymongo as mongo
+import streamlit.components.v1 as components
+from bs4 import BeautifulSoup
 
+STUDENT_ANSWER = 'student_answer'
+ANSWER_STATE = 'answer_state'
+COUNT = 'count'
+OPEN_AI_EXPLANATION = 'explanation'
+STUDENT_EXPLANATION = 'student_explanation'
+STUDENT_RATING = 'rating'
+STUDENT_FORM_SUBMITTED = 'student_form_submitted'
 
-openai.api_key = st.secrets['OPENAI_API_KEY']
-
-client = mongo.MongoClient(**st.secrets["mongo"])
-
-
-if 'count' not in st.session_state:
-    st.session_state.count = 0
-    st.session_state.answer = ''
-    st.session_state.explanation = ''
-    st.session_state.rating = ''
-    st.session_state.student_explanation = ''
-
-
-def after_submit():
-    write_to_db(create_dict())
-    st.session_state.answer = ''
-    increment_counter()
-
-
-def write_to_db(dict_to_save):
-    db = client.nlp_db
-    csv_collection = db.csv_collection
-    return csv_collection.insert_one(dict_to_save)
-
-
-def create_dict():
-    return {
-        'question': [Ques],
-        'student_answer': [st.session_state.answer],
-        'correct_incorrect': [answerStat],
-        'explanation': [st.session_state.explanation],
-        'rating': [st.session_state.rating],
-        'student_explanation': [st.session_state.student_explanation]
-    }
-
-
-def increment_counter():
-    st.session_state.count += 1
-    st.session_state.answer = ''
-    st.session_state.student_explanation = ''
-    st.session_state.rating = '1 Star'
-
-
-def for_server():
-    return glob.glob("./tmp/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
-        glob.glob("./tmp/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
-
-
-FILEs = for_server()
-
-
-try:
-    f = open(f'{FILEs[st.session_state.count]}', 'r')
-    data = f.read()
-except IndexError:
-    st.session_state.count = 0
-    f = open(f'{FILEs[st.session_state.count]}', 'r')
-    data = f.read()
-
-# Passing the stored data inside
-# the beautifulsoup parser, storing
-# the returned object
-Bs_data = BeautifulSoup(data, "xml")
-
-# Finding all instances of tag
-# `unique`
-b_unique = Bs_data.find_all('questionText')
-Anse = Bs_data.find_all('studentAnswer', accuracy="correct")
-sub1 = "<questionText>"
-sub2 = '</questionText>'
-# getting index of substrings
-idx1 = str(b_unique[0]).index(sub1)
-idx2 = str(b_unique[0]).index(sub2)
-# length of substring 1 is added to
-# get string from next character
-Ques = str(b_unique[0])[idx1 + len(sub1): idx2]
-currentCsvLine = ""
-
-# LOGO_URL = "https://www.ltl.uni-due.de/assets/images/logo3.png"
-# description = """
-# <h2>Master Thesis Topic:- Collecting and analyse automatically generated feedback explanations</h2>
-# <p style='outline-style: solid;padding:10px;outline-color: green; font-size:16px; text-align: center; font-family:'Open Sans', sans-serif; '> <b>PROTECTION OF DATA:-</b><br>
-# <ol style='font-size:18px;font-family: "Source Sans Pro", sans-serif;'>
-#   <li>The owners of this website take the security of your personal information very seriously. We handle your personal data with confidentiality and in compliance with the applicable data protection laws and this data protection statement.</li>
-#   <li>Various personal data are gathered when you use this website. Personal data are pieces of information that may be used to identify you personally. This data protection statement outlines what information we gather and how we utilize it. It also discusses why and how this is accomplished.</li>
-#   <li>We'd like to emphasize that data transfer via the Internet (for example, while interacting through e-mail) may have security flaws. It is not feasible to completely secure data from unauthorized access.</li>
-# </ol>
-# </p>
-# """
-
-resultAndExplanationHTML = """
+EXPLANATION__HTML = """
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -135,60 +49,103 @@ resultAndExplanationHTML = """
 </div>
 """
 
-# st.image(use_column_width=True, image=LOGO_URL)
-# components.html(description, height=340, width=700, scrolling=True)
-
-st.markdown("___")
-with st.form("my_form"):
-    # st.subheader('Below we will show the all questions come form dataset')
-    st.write("Question")
-    question = f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {Ques}</p>"
-    Q = Ques
-    components.html(question)
-    # st.subheader('Below student will write their answers')
-    st.text_input("Answer", key='answer')
-    isSubmitted = st.form_submit_button("Submit")
-
-    # Every form must have a submit button.
-    realans = []
-    for i in Anse:
-        sub1 = ">"
-        sub2 = '</studentAnswer>'
-        # getting index of substrings
-        idx1 = str(i).index(sub1)
-        idx2 = str(i).index(sub2)
-        # length of substring 1 is added to
-        # get string from next character
-        res = str(i)[idx1 + len(sub1): idx2]
-        realans.append(res)
-    if st.session_state.answer in realans:
-        answerStat = "correct"
-    elif st.session_state.answer not in realans:
-        answerStat = "incorrect"
-    response = openai.Completion.create(
-        engine="davinci",
-        prompt=f"Question: {Ques}\nStudentAnswer: {st.session_state.answer}\nTargetAnswer: {realans[0]}\nExplanation",
-        temperature=1,
-        max_tokens=64,
-        top_p=1,
-        frequency_penalty=2,
-        presence_penalty=2,
-        stop=["\n"]
-    )
-
-# @st.cache(suppress_st_warning=True)
+LOGO_URL = "https://www.ltl.uni-due.de/assets/images/logo3.png"
+description = """
+<h2>Master Thesis Topic:- Collecting and analyse automatically generated feedback explanations</h2>
+<p style='outline-style: solid;padding:10px;outline-color: green; font-size:16px; text-align: center; font-family:'Open Sans', sans-serif; '> <b>PROTECTION OF DATA:-</b><br>
+<ol style='font-size:18px;font-family: "Source Sans Pro", sans-serif;'>
+  <li>The owners of this website take the security of your personal information very seriously. We handle your personal data with confidentiality and in compliance with the applicable data protection laws and this data protection statement.</li>
+  <li>Various personal data are gathered when you use this website. Personal data are pieces of information that may be used to identify you personally. This data protection statement outlines what information we gather and how we utilize it. It also discusses why and how this is accomplished.</li>
+  <li>We'd like to emphasize that data transfer via the Internet (for example, while interacting through e-mail) may have security flaws. It is not feasible to completely secure data from unauthorized access.</li>
+</ol>
+</p>
+"""
 
 
-def load_feedback_form():
+def change_session_state(key, value):
+    st.session_state[key] = value
+
+
+def feedback_form_submitted():
+    write_to_db(create_dict())
+    increment_counter()
+    clear_session_state()
+
+
+def write_to_db(dict_to_save):
+    db = client.nlp_db
+    csv_collection = db.csv_collection
+    return csv_collection.insert_one(dict_to_save)
+
+
+def create_dict():
+    return {
+        'question': question,
+        'student_answer': st.session_state[STUDENT_ANSWER],
+        'correct_incorrect': st.session_state[ANSWER_STATE],
+        'explanation': st.session_state[OPEN_AI_EXPLANATION],
+        'rating': st.session_state[STUDENT_RATING],
+        'student_explanation': st.session_state[STUDENT_EXPLANATION]
+    }
+
+
+def increment_counter():
+    st.session_state.count += 1
+
+
+def clear_session_state():
+    st.session_state.answer = ''
+    st.session_state[ANSWER_STATE] = ''
+    st.session_state[STUDENT_EXPLANATION] = ''
+    st.session_state[STUDENT_RATING] = '1 Star'
+    st.session_state[STUDENT_FORM_SUBMITTED] = False
+
+
+def get_list_of_file_names():
+    return glob.glob("./tmp/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
+           glob.glob("./tmp/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+
+
+def get_question():
+    return soup.find('questionText').string
+
+
+def get_explaination_from_responce():
+    return response['choices'][0]['text']
+
+
+def find_answers():
+    tags = []
+    for tag in soup.find_all('studentAnswer', accuracy="correct"):
+        tags.append(tag.string)
+    return tags
+
+
+def create_question_string():
+    return f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {question}</p>"
+
+
+def get_reference_ans():
+    return soup.find('referenceAnswer', category="BEST").string
+
+
+def find_target_answer():
+    return "correct" if st.session_state[STUDENT_ANSWER] in answers else "incorrect"
+
+
+def student_form_submitted():
+    change_session_state(STUDENT_FORM_SUBMITTED, True)
+
+
+def load_feedback_form(answer_stat, reference_ans):
     with st.container():
-
-        explanation = response['choices'][0]['text']
-        save_exp_to_session(explanation)
+        change_session_state('explanation', explanation)
+        change_session_state('answer_stat', answer_stat)
         components.html(
             resultAndExplanationHTML.format(
-                answerStatus=answerStat,
+                answerStatus=answer_stat,
                 explanation=explanation,
-                reference_ans=realans[0]
+                reference_ans=reference_ans
             ),
             height=500,
             scrolling=True
@@ -201,15 +158,83 @@ def load_feedback_form():
             radioOptions = ['1 Star', '2 Star', '3 Star', '4 Star', '5 Star']
             st.radio("Select Rating", radioOptions, key='rating')
 
-            st.text_area("Student Explanation", key='student_explanation')
+            st.text_area("Student Explanation", key=STUDENT_EXPLANATION)
 
             st.form_submit_button(
-                "Next Question", on_click=after_submit)
+                "Next Question", on_click=feedback_form_submitted)
 
 
-def save_exp_to_session(exp):
-    st.session_state.explanation = exp
+def load_student_question_form():
+    with st.container():
+        change_session_state(STUDENT_ANSWER, '')
+        with st.form("my_form"):
+            components.html(question_str)
+            st.text_area("Answer", key=STUDENT_ANSWER)
+            st.form_submit_button(
+                "Submit", on_click=student_form_submitted)
 
 
-if isSubmitted:
-    load_feedback_form()
+def get_openai_response():
+    return openai.Completion.create(
+        engine="davinci",
+        prompt=f"Question: {question_str}\nStudentAnswer: {st.session_state[STUDENT_ANSWER]}\nTargetAnswer: {target_answer}\nExplanation",
+        temperature=1,
+        max_tokens=64,
+        top_p=1,
+        frequency_penalty=2,
+        presence_penalty=2,
+        stop=["\n"]
+    )
+
+
+def initialize_session_state():
+    st.session_state[COUNT] = 0
+    st.session_state[ANSWER_STATE] = ''
+    st.session_state[OPEN_AI_EXPLANATION] = ''
+    st.session_state[STUDENT_RATING] = ''
+    st.session_state[STUDENT_EXPLANATION] = ''
+    st.session_state[STUDENT_ANSWER] = ''
+    st.session_state[STUDENT_FORM_SUBMITTED] = False
+
+
+# main routine
+openai.api_key = st.secrets['OPENAI_API_KEY']
+client = mongo.MongoClient(**st.secrets["mongo"])
+enableLogo = False
+isSubmitted = False
+
+if 'count' not in st.session_state:
+    initialize_session_state()
+
+files = get_list_of_file_names()
+
+try:
+    f = open(f'{files[st.session_state.count]}', 'r')
+    data = f.read()
+except IndexError:
+    st.session_state.count = 0
+    f = open(f'{files[st.session_state.count]}', 'r')
+    data = f.read()
+
+soup = BeautifulSoup(data, "xml")
+
+answers = find_answers()
+question = get_question()
+
+resultAndExplanationHTML = EXPLANATION__HTML
+if enableLogo:
+    st.image(use_column_width=True, image=LOGO_URL)
+    components.html(description, height=340, width=700, scrolling=True)
+
+st.markdown("___")
+target_answer = find_target_answer()
+question_str = create_question_string()
+
+load_student_question_form()
+
+response = get_openai_response()
+
+if st.session_state[STUDENT_FORM_SUBMITTED]:
+    explanation = get_explaination_from_responce()
+    ref_answer = get_reference_ans()
+    load_feedback_form(target_answer, ref_answer)
