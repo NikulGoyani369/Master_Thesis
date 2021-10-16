@@ -1,1 +1,1 @@
-streamlit run tmp/streamlit_appcopy.py
+streamlit run tmp/main.py
