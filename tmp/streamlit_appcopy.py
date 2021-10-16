@@ -6,14 +6,17 @@ import streamlit.components.v1 as components
 from bs4 import BeautifulSoup
 
 STUDENT_ANSWER = 'student_answer'
+QUESTION = 'question'
 ANSWER_STATE = 'answer_state'
+ANSWER = 'answer'
+REF_ANSWER = 'ref_answer'
 COUNT = 'count'
 OPEN_AI_EXPLANATION = 'explanation'
 STUDENT_EXPLANATION = 'student_explanation'
 STUDENT_RATING = 'rating'
 STUDENT_FORM_SUBMITTED = 'student_form_submitted'
 
-EXPLANATION__HTML = """
+EXPLANATION_HTML = """
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,7 +65,7 @@ description = """
 """
 
 
-def change_session_state(key, value):
+def save_into_session(key, value):
     st.session_state[key] = value
 
 
@@ -80,7 +83,7 @@ def write_to_db(dict_to_save):
 
 def create_dict():
     return {
-        'question': question,
+        'question': st.session_state[QUESTION],
         'student_answer': st.session_state[STUDENT_ANSWER],
         'correct_incorrect': st.session_state[ANSWER_STATE],
         'explanation': st.session_state[OPEN_AI_EXPLANATION],
@@ -94,11 +97,16 @@ def increment_counter():
 
 
 def clear_session_state():
-    st.session_state.answer = ''
+    st.session_state[ANSWER] = ''
+    st.session_state[REF_ANSWER] = ''
     st.session_state[ANSWER_STATE] = ''
     st.session_state[STUDENT_EXPLANATION] = ''
+    st.session_state[OPEN_AI_EXPLANATION] = ''
+    st.session_state[STUDENT_ANSWER] = ''
     st.session_state[STUDENT_RATING] = '1 Star'
     st.session_state[STUDENT_FORM_SUBMITTED] = False
+    st.session_state[QUESTION] = ''
+    print(st.session_state)
 
 
 def get_list_of_file_names():
@@ -122,7 +130,7 @@ def find_answers():
 
 
 def create_question_string():
-    return f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {question}</p>"
+    return f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {st.session_state[QUESTION]}</p>"
 
 
 def get_reference_ans():
@@ -134,18 +142,16 @@ def find_target_answer():
 
 
 def student_form_submitted():
-    change_session_state(STUDENT_FORM_SUBMITTED, True)
+    save_into_session(STUDENT_FORM_SUBMITTED, True)
 
 
-def load_feedback_form(answer_stat, reference_ans):
+def load_feedback_form():
     with st.container():
-        change_session_state('explanation', explanation)
-        change_session_state('answer_stat', answer_stat)
         components.html(
-            resultAndExplanationHTML.format(
-                answerStatus=answer_stat,
-                explanation=explanation,
-                reference_ans=reference_ans
+            EXPLANATION_HTML.format(
+                answerStatus=st.session_state[ANSWER_STATE],
+                explanation=st.session_state[OPEN_AI_EXPLANATION],
+                reference_ans=st.session_state[REF_ANSWER]
             ),
             height=500,
             scrolling=True
@@ -156,7 +162,7 @@ def load_feedback_form(answer_stat, reference_ans):
             '<style>div.row-widget.stButton > div{flex-direction:row;}</style>', unsafe_allow_html=True)
         with st.form("feedbackform"):
             radioOptions = ['1 Star', '2 Star', '3 Star', '4 Star', '5 Star']
-            st.radio("Select Rating", radioOptions, key='rating')
+            st.radio("Select Rating", radioOptions, key=STUDENT_RATING)
 
             st.text_area("Student Explanation", key=STUDENT_EXPLANATION)
 
@@ -166,10 +172,9 @@ def load_feedback_form(answer_stat, reference_ans):
 
 def load_student_question_form():
     with st.container():
-        change_session_state(STUDENT_ANSWER, '')
-        with st.form("my_form"):
+        with st.form(key="my_form"):
             components.html(question_str)
-            st.text_area("Answer", key=STUDENT_ANSWER)
+            st.text_area("Answer", value='', key=STUDENT_ANSWER)
             st.form_submit_button(
                 "Submit", on_click=student_form_submitted)
 
@@ -190,21 +195,36 @@ def get_openai_response():
 def initialize_session_state():
     st.session_state[COUNT] = 0
     st.session_state[ANSWER_STATE] = ''
+    st.session_state[ANSWER] = ''
+    st.session_state[REF_ANSWER] = ''
+    st.session_state[QUESTION] = ''
     st.session_state[OPEN_AI_EXPLANATION] = ''
-    st.session_state[STUDENT_RATING] = ''
+    st.session_state[STUDENT_RATING] = '1 Star'
     st.session_state[STUDENT_EXPLANATION] = ''
     st.session_state[STUDENT_ANSWER] = ''
     st.session_state[STUDENT_FORM_SUBMITTED] = False
+
+
+def initialize_few_session_state():
+    st.session_state[ANSWER_STATE] = ''
+    st.session_state[ANSWER] = ''
+    st.session_state[REF_ANSWER] = ''
+    st.session_state[QUESTION] = ''
+    st.session_state[OPEN_AI_EXPLANATION] = ''
+    st.session_state[STUDENT_RATING] = '1 Star'
+    st.session_state[STUDENT_EXPLANATION] = ''
+    st.session_state[STUDENT_ANSWER] = ''
 
 
 # main routine
 openai.api_key = st.secrets['OPENAI_API_KEY']
 client = mongo.MongoClient(**st.secrets["mongo"])
 enableLogo = False
-isSubmitted = False
 
 if 'count' not in st.session_state:
     initialize_session_state()
+else:
+    initialize_few_session_state()
 
 files = get_list_of_file_names()
 
@@ -220,21 +240,24 @@ soup = BeautifulSoup(data, "xml")
 
 answers = find_answers()
 question = get_question()
+save_into_session(QUESTION, question)
 
-resultAndExplanationHTML = EXPLANATION__HTML
 if enableLogo:
     st.image(use_column_width=True, image=LOGO_URL)
     components.html(description, height=340, width=700, scrolling=True)
 
 st.markdown("___")
-target_answer = find_target_answer()
 question_str = create_question_string()
-
 load_student_question_form()
 
+target_answer = find_target_answer()
 response = get_openai_response()
 
 if st.session_state[STUDENT_FORM_SUBMITTED]:
     explanation = get_explaination_from_responce()
     ref_answer = get_reference_ans()
-    load_feedback_form(target_answer, ref_answer)
+    save_into_session(OPEN_AI_EXPLANATION, explanation)
+    save_into_session(REF_ANSWER, ref_answer)
+    save_into_session(ANSWER_STATE, target_answer)
+
+    load_feedback_form()
