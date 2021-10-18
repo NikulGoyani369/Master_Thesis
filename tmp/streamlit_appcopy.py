@@ -23,8 +23,7 @@ EXPLANATION_HTML = """
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@1,495&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-
+    
 <div class="card mb-12 shadow-sm"   >
       <div class="card-body"  style='outline-style: solid;padding:10px;outline-color: blue;'>
         <h2 class="card-title">Result:</h2>
@@ -55,12 +54,16 @@ EXPLANATION_HTML = """
 LOGO_URL = "https://www.ltl.uni-due.de/assets/images/logo3.png"
 description = """
 <h2>Master Thesis Topic:- Collecting and analyse automatically generated feedback explanations</h2>
+<h3>Contact Email-ID:- goyaniniks@gmail.com</h3>
 <p style='outline-style: solid;padding:10px;outline-color: green; font-size:16px; text-align: center; font-family:'Open Sans', sans-serif; '> <b>PROTECTION OF DATA:-</b><br>
-<ol style='font-size:18px;font-family: "Source Sans Pro", sans-serif;'>
-  <li>The owners of this website take the security of your personal information very seriously. We handle your personal data with confidentiality and in compliance with the applicable data protection laws and this data protection statement.</li>
-  <li>Various personal data are gathered when you use this website. Personal data are pieces of information that may be used to identify you personally. This data protection statement outlines what information we gather and how we utilize it. It also discusses why and how this is accomplished.</li>
-  <li>We'd like to emphasize that data transfer via the Internet (for example, while interacting through e-mail) may have security flaws. It is not feasible to completely secure data from unauthorized access.</li>
-</ol>
+<ul style='font-size:18px;font-family: "Source Sans Pro", sans-serif;'>
+  <li>We are using Student Response Analysis dataset.</li>
+  <li>Original principle of this thesis is to take an answers from the student, which can then be classified as either correct or incorrect.
+  Based on the student answers, generate an explanation of why the student's answer is incorrect or correct. Firstly, it is a machine-generated explanation by
+  the model of Natural Language Processing(NLP). Finally, it asks the student to evaluate if the machine-generated explanation is viable or write a student explanation</li>
+  <br>
+  <li>Whatever data is provided in this survey will be taken into use only for this thesis work. The data will not be shared in any place. This data will remain completly anonymous</li>
+</ul>
 </p>
 """
 
@@ -219,7 +222,7 @@ def initialize_few_session_state():
 # main routine
 openai.api_key = st.secrets['OPENAI_API_KEY']
 client = mongo.MongoClient(**st.secrets["mongo"])
-enableLogo = False
+enableLogo = True
 
 if 'count' not in st.session_state:
     initialize_session_state()
