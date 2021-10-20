@@ -57,7 +57,7 @@ LOGO_URL = "https://www.ltl.uni-due.de/assets/images/logo3.png"
 
 description = """
 <h2>Master Thesis Topic:- Collecting and analyse automatically generated feedback explanations</h2>
-<h3>Contact Email-ID:- nikulkumar.goyani@stud.uni-due.de</h3>
+<h3 style='font-weight: normal; font-family:'Open Sans', sans-serif;'>Contact Email-ID:- nikulkumar.goyani@stud.uni-due.de</h3>
 <p style='outline-style: solid;padding:10px;outline-color: green; font-size:16px; text-align: center; font-family:'Open Sans', sans-serif; '> <b>PROTECTION OF DATA:-</b><br>
 <ul style='font-size:18px;font-family: "Source Sans Pro", sans-serif;  text-align: justify;'>
   <li>The dataset comprises student replies to explanation and definition questions found in practise activities and exams. 
