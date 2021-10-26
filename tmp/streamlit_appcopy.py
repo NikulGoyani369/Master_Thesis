@@ -60,7 +60,7 @@ description = """
 <h3 style='font-weight: normal; font-family:'Open Sans', sans-serif;'>Contact Email-ID:- nikulkumar.goyani@stud.uni-due.de</h3>
 <p style='outline-style: solid;padding:10px;outline-color: green; font-size:16px; text-align: center; font-family:'Open Sans', sans-serif; '> <b>PROTECTION OF DATA:-</b><br>
 <ul style='font-size:18px;font-family: "Source Sans Pro", sans-serif;  text-align: justify;'>
-  <li>The dataset comprises student replies to explanation and definition questions found in practise activities and exams. 
+  <li> The dataset comprises student replies to explanation and definition questions found in practise activities and exams. 
   The Student Response Analysis dataset is split into two parts: Beetle and SciEntsBank. 
   Answers to explanation and definition questions are meticulously labelled. The data set includes a sample question, reference answer, and student response.
   In this thesis, a human annotator classifies each student response as one of five evaluations. 
@@ -68,7 +68,7 @@ description = """
   <li> Original principle of this thesis is to take an answers from the student, which can then be classified as either correct or incorrect.
   Based on the student answers, generate an explanation of why the student's answer is incorrect or correct. Firstly, it is a machine-generated explanation by
   the model of Natural Language Processing (NLP). Finally, it asks the student to evaluate if the machine-generated explanation is viable or write a student explanation</li> <br>
-  <li>Whatever data is provided in this survey will be taken into use only for this thesis work. The data will not be shared in any place. This data will remain completly anonymous</li>
+  <li> Whatever data is provided in this survey will be taken into use only for this thesis work. The data will not be shared in any place. This data will remain completly anonymous</li>
 </ul>
 </p>
 """
@@ -139,6 +139,7 @@ def find_answers():
 
 
 def create_question_string():
+    st.write("Question :-")
     return f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {st.session_state[QUESTION]}</p>"
 
 
@@ -183,7 +184,8 @@ def load_student_question_form():
     with st.container():
         with st.form(key="my_form"):
             components.html(question_str)
-            st.text_area("Answer", value='', key=STUDENT_ANSWER)
+            st.write("Answer :-")
+            st.text_area("", value='', key=STUDENT_ANSWER)
             st.form_submit_button(
                 "Submit", on_click=student_form_submitted)
 
