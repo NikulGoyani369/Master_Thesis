@@ -5,16 +5,9 @@ import pymongo as mongo
 import streamlit.components.v1 as components
 from bs4 import BeautifulSoup
 
-STUDENT_ANSWER = 'student_answer'
-QUESTION = 'question'
-ANSWER_STATE = 'answer_state'
-ANSWER = 'answer'
-REF_ANSWER = 'ref_answer'
 COUNT = 'count'
-OPEN_AI_EXPLANATION = 'explanation'
 STUDENT_EXPLANATION = 'student_explanation'
 STUDENT_RATING = 'rating'
-STUDENT_FORM_SUBMITTED = 'student_form_submitted'
 
 EXPLANATION_HTML = """
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -116,88 +109,46 @@ def get_list_of_file_names():
            glob.glob("./tmp/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 
-
 def create_question_string():
     st.write("Question :-")
     return f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {data['question']}</p>"
 
 
-
-def find_target_answer():
-    return "correct" if st.session_state[STUDENT_ANSWER] in answers else "incorrect"
-
-
-def student_form_submitted():
-    save_into_session(STUDENT_FORM_SUBMITTED, True)
-
-
-def load_feedback_form():
-    with st.container():
-        components.html(
-            EXPLANATION_HTML.format(
-                answerStatus=data['accuracy'],
-                explanation=data['explanation'],
-                reference_ans=data['ref_answer']
-            ),
-            height=500,
-            scrolling=True
-        )
-        st.write(
-            '<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-        st.write(
-            '<style>div.row-widget.stButton > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-        with st.form("feedbackform"):
-            radioOptions = ['1 Star', '2 Star', '3 Star', '4 Star', '5 Star']
-            st.radio("Select Rating", radioOptions, key=STUDENT_RATING)
-
-            st.text_area("Student Explanation", key=STUDENT_EXPLANATION)
-
-            st.form_submit_button(
-                "Next Question", on_click=feedback_form_submitted)
-
-
 def load_student_question_form():
-    with st.container():
-        components.html(question_str)
-        st.write("Student Answer :")
-        st.text_area("", value=data['student_answer'])
-
-
-def get_openai_response():
-    return openai.Completion.create(
-        engine="davinci",
-        prompt=f"Question: {question_str}\nStudentAnswer: {st.session_state[STUDENT_ANSWER]}\nTargetAnswer: {target_answer}\nExplanation",
-        temperature=1,
-        max_tokens=64,
-        top_p=1,
-        frequency_penalty=2,
-        presence_penalty=2,
-        stop=["\n"]
+    components.html(question_str)
+    st.write("Student Answer :")
+    st.text_area("", value=data['student_answer'])
+    components.html(
+        EXPLANATION_HTML.format(
+            answerStatus=data['accuracy'],
+            explanation=data['explanation'],
+            reference_ans=data['ref_answer']
+        ),
+        height=500,
+        scrolling=True
     )
+    st.write(
+        '<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
+    st.write(
+        '<style>div.row-widget.stButton > div{flex-direction:row;}</style>', unsafe_allow_html=True)
+    radioOptions = ['1 Star', '2 Star', '3 Star', '4 Star', '5 Star']
+
+    with st.form("form", clear_on_submit=True):
+        st.radio("Select Rating", radioOptions, key=STUDENT_RATING)
+        st.text_area("Student Explanation", key=STUDENT_EXPLANATION)
+        st.form_submit_button(
+            "Next Question", on_click=feedback_form_submitted)
 
 
 def initialize_session_state():
     st.session_state[COUNT] = 1
-    st.session_state[ANSWER_STATE] = ''
-    st.session_state[ANSWER] = ''
-    st.session_state[REF_ANSWER] = ''
-    st.session_state[QUESTION] = ''
-    st.session_state[OPEN_AI_EXPLANATION] = ''
     st.session_state[STUDENT_RATING] = '1 Star'
     st.session_state[STUDENT_EXPLANATION] = ''
-    st.session_state[STUDENT_ANSWER] = ''
-    st.session_state[STUDENT_FORM_SUBMITTED] = False
 
 
 def initialize_few_session_state():
-    st.session_state[ANSWER_STATE] = ''
-    st.session_state[ANSWER] = ''
-    st.session_state[REF_ANSWER] = ''
-    st.session_state[QUESTION] = ''
-    st.session_state[OPEN_AI_EXPLANATION] = ''
     st.session_state[STUDENT_RATING] = '1 Star'
     st.session_state[STUDENT_EXPLANATION] = ''
-    st.session_state[STUDENT_ANSWER] = ''
 
 
 # main routine
@@ -210,7 +161,7 @@ if COUNT not in st.session_state:
 else:
     initialize_few_session_state()
 
-file = open("./tmp/open_ai_questions_final.csv")
+file = open("./tmp/open_ai_questions_final.csv", encoding='utf-8')
 lines = file.readlines()
 line = lines[st.session_state[COUNT]]
 
@@ -230,4 +181,3 @@ if enableLogo:
 st.markdown("___")
 question_str = create_question_string()
 load_student_question_form()
-load_feedback_form()
