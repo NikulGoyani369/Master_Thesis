@@ -92,10 +92,10 @@ def write_to_db(dict_to_save):
 
 def create_dict():
     return {
-        'question': st.session_state[QUESTION],
-        'student_answer': st.session_state[STUDENT_ANSWER],
-        'correct_incorrect': st.session_state[ANSWER_STATE],
-        'explanation': st.session_state[OPEN_AI_EXPLANATION],
+        'question': data['question'],
+        'student_answer': data['student_answer'],
+        'accuracy': data['accuracy'],
+        'explanation': data['explanation'],
         'rating': st.session_state[STUDENT_RATING],
         'student_explanation': st.session_state[STUDENT_EXPLANATION]
     }
@@ -140,7 +140,7 @@ def find_answers():
 
 def create_question_string():
     st.write("Question :-")
-    return f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {st.session_state[QUESTION]}</p>"
+    return f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {data['question']}</p>"
 
 
 def get_reference_ans():
@@ -159,9 +159,9 @@ def load_feedback_form():
     with st.container():
         components.html(
             EXPLANATION_HTML.format(
-                answerStatus=st.session_state[ANSWER_STATE],
-                explanation=st.session_state[OPEN_AI_EXPLANATION],
-                reference_ans=st.session_state[REF_ANSWER]
+                answerStatus=data['accuracy'],
+                explanation=data['explanation'],
+                reference_ans=data['ref_answer']
             ),
             height=500,
             scrolling=True
@@ -182,12 +182,9 @@ def load_feedback_form():
 
 def load_student_question_form():
     with st.container():
-        with st.form(key="my_form"):
-            components.html(question_str)
-            st.write("Answer :-")
-            st.text_area("", value='', key=STUDENT_ANSWER)
-            st.form_submit_button(
-                "Submit", on_click=student_form_submitted)
+        components.html(question_str)
+        st.write("Student Answer :")
+        st.text_area("", value=data['student_answer'])
 
 
 def get_openai_response():
@@ -204,7 +201,7 @@ def get_openai_response():
 
 
 def initialize_session_state():
-    st.session_state[COUNT] = 0
+    st.session_state[COUNT] = 1
     st.session_state[ANSWER_STATE] = ''
     st.session_state[ANSWER] = ''
     st.session_state[REF_ANSWER] = ''
@@ -232,26 +229,27 @@ openai.api_key = st.secrets['OPENAI_API_KEY']
 client = mongo.MongoClient(**st.secrets["mongo"])
 enableLogo = True
 
-if 'count' not in st.session_state:
+if COUNT not in st.session_state:
     initialize_session_state()
 else:
     initialize_few_session_state()
 
-files = get_list_of_file_names()
+file = open("./tmp/open_ai_questions_final.csv")
+lines = file.readlines()
+line = lines[st.session_state[COUNT]]
 
-try:
-    f = open(f'{files[st.session_state.count]}', 'r')
-    data = f.read()
-except IndexError:
-    st.session_state.count = 0
-    f = open(f'{files[st.session_state.count]}', 'r')
-    data = f.read()
+#import csv
 
-soup = BeautifulSoup(data, "xml")
-
-answers = find_answers()
-question = get_question()
-save_into_session(QUESTION, question)
+#csv_reader = csv.reader(file, delimiter='|')
+#row = csv_reader[st.session_state[COUNT]]
+row = line.split('|')
+data = {
+    'question': row[0],
+    'ref_answer': row[1],
+    'student_answer': row[2],
+    'accuracy': row[3],
+    'explanation': row[4],
+}
 
 if enableLogo:
     st.image(use_column_width=True, image=LOGO_URL)
@@ -260,15 +258,4 @@ if enableLogo:
 st.markdown("___")
 question_str = create_question_string()
 load_student_question_form()
-
-target_answer = find_target_answer()
-response = get_openai_response()
-
-if st.session_state[STUDENT_FORM_SUBMITTED]:
-    explanation = get_explaination_from_responce()
-    ref_answer = get_reference_ans()
-    save_into_session(OPEN_AI_EXPLANATION, explanation)
-    save_into_session(REF_ANSWER, ref_answer)
-    save_into_session(ANSWER_STATE, target_answer)
-
-    load_feedback_form()
+load_feedback_form()
