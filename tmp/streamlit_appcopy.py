@@ -106,15 +106,8 @@ def increment_counter():
 
 
 def clear_session_state():
-    st.session_state[ANSWER] = ''
-    st.session_state[REF_ANSWER] = ''
-    st.session_state[ANSWER_STATE] = ''
     st.session_state[STUDENT_EXPLANATION] = ''
-    st.session_state[OPEN_AI_EXPLANATION] = ''
-    st.session_state[STUDENT_ANSWER] = ''
     st.session_state[STUDENT_RATING] = '1 Star'
-    st.session_state[STUDENT_FORM_SUBMITTED] = False
-    st.session_state[QUESTION] = ''
     print(st.session_state)
 
 
@@ -123,28 +116,11 @@ def get_list_of_file_names():
            glob.glob("./tmp/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 
-def get_question():
-    return soup.find('questionText').string
-
-
-def get_explaination_from_responce():
-    return response['choices'][0]['text']
-
-
-def find_answers():
-    tags = []
-    for tag in soup.find_all('studentAnswer', accuracy="correct"):
-        tags.append(tag.string)
-    return tags
-
 
 def create_question_string():
     st.write("Question :-")
     return f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {data['question']}</p>"
 
-
-def get_reference_ans():
-    return soup.find('referenceAnswer', category="BEST").string
 
 
 def find_target_answer():
@@ -238,10 +214,6 @@ file = open("./tmp/open_ai_questions_final.csv")
 lines = file.readlines()
 line = lines[st.session_state[COUNT]]
 
-#import csv
-
-#csv_reader = csv.reader(file, delimiter='|')
-#row = csv_reader[st.session_state[COUNT]]
 row = line.split('|')
 data = {
     'question': row[0],
