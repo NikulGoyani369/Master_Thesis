@@ -43,7 +43,6 @@ EXPLANATION_HTML = """
         <h3 style="float:center; font-size:20px; "class="text-muted">What do you think this explanation is good. Why not?</h3>
         <h3 style="float:center; font-size:20px; "class="text-muted">What do you think this explanation is good. Why not?</h3>
         <h3 style="float:center; font-size:20px; "class="text-muted">What do you think this explanation is good. Why not?</h3>
-        <h3 style="float:center; font-size:20px; "class="text-muted">What do you think this explanation is good. Why not?</h3>
     </div>
 </div>
 """
