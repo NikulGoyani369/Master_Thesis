@@ -109,6 +109,7 @@ def clear_session_state():
 #            glob.glob("./tmp/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 
+
 def create_question_string():
     st.write("Question :-")
     return f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {data['question']}</p>"
