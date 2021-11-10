@@ -104,9 +104,9 @@ def clear_session_state():
     print(st.session_state)
 
 
-def get_list_of_file_names():
-    return glob.glob("./tmp/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
-           glob.glob("./tmp/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
+# def get_list_of_file_names():
+#     return glob.glob("./tmp/semeval2013-Task7-2and3way/*/2way/*/*.xml") + \
+#            glob.glob("./tmp/semeval2013-Task7-2and3way/test/2way/*/*/*.xml")
 
 
 def create_question_string():
