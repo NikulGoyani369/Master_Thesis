@@ -37,6 +37,9 @@ EXPLANATION_HTML = """
     </div>
 </div>
 <br>
+
+"""
+EVOLUTION_HTML = """
 <div class="card mb-12 shadow-sm">
     <div class="card-header">
         <h3 style="float:center; font-size:20px; "class="text-muted">What do you think this explanation is good. Why not?</h3>
@@ -46,7 +49,6 @@ EXPLANATION_HTML = """
     </div>
 </div>
 """
-
 st.markdown("University Department:- [Language Technology Lab](https://www.ltl.uni-due.de)")
 
 LOGO_URL = "https://www.ltl.uni-due.de/assets/images/logo3.png"
@@ -137,6 +139,7 @@ def load_student_question_form():
     radioOptions = ['1 Star', '2 Star', '3 Star', '4 Star', '5 Star']
 
     with st.form("form", clear_on_submit=True):
+        components.html(EVOLUTION_HTML.format())
         st.radio("Select Rating", radioOptions, key=STUDENT_RATING)
         st.text_area("Student Explanation", key=STUDENT_EXPLANATION)
         st.form_submit_button(
@@ -177,7 +180,7 @@ data = {
     'accuracy': row[3],
     'explanation': row[4],
 }
-
+# first uni logo with description
 if enableLogo:
     st.image(use_column_width=True, image=LOGO_URL)
     components.html(description, height=340, width=700, scrolling=True)
