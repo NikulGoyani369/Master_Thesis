@@ -37,15 +37,13 @@ EXPLANATION_HTML = """
     </div>
 </div>
 <br>
-
 """
 EVOLUTION_HTML = """
 <div class="card mb-12 shadow-sm">
     <div class="card-header">
         <h3 style="float:center; font-size:20px; "class="text-muted">What do you think this explanation is good. Why not?</h3>
-        <h3 style="float:center; font-size:20px; "class="text-muted">What do you think this explanation is good. Why not?</h3>
-        <h3 style="float:center; font-size:20px; "class="text-muted">What do you think this explanation is good. Why not?</h3>
-        <h3 style="float:center; font-size:20px; "class="text-muted">What do you think this explanation is good. Why not?</h3>
+        <br>
+        <h4>Below rating the explanation and write your Explanation</h4>
     </div>
 </div>
 """
@@ -122,7 +120,7 @@ def create_question_string():
 def load_student_question_form():
     components.html(question_str)
     st.write("Student Answer :")
-    st.text_area("", value=data['student_answer'])
+    st.text_area("", value   =data['student_answer'])
     components.html(
         EXPLANATION_HTML.format(
             answerStatus=data['accuracy'],
@@ -138,6 +136,8 @@ def load_student_question_form():
         '<style>div.row-widget.stButton > div{flex-direction:row;}</style>', unsafe_allow_html=True)
     radioOptions = ['1 Star', '2 Star', '3 Star', '4 Star', '5 Star']
 
+    st.container()
+    # components.html(EVOLUTION_HTML.format(width=500))
     with st.form("form", clear_on_submit=True):
         components.html(EVOLUTION_HTML.format())
         st.radio("Select Rating", radioOptions, key=STUDENT_RATING)
