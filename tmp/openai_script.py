@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import os
 import openai
 
-openai.api_key = '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'
+openai.api_key = 'sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
 file_name_to_write = 'open_ai_questions.csv'
 
