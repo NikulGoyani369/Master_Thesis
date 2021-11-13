@@ -39,11 +39,11 @@ EXPLANATION_HTML = """
 </div>
 """
 EVOLUTION_HTML = """
-<div class="card mb-12 shadow-sm">
+<div class="card mb-12 shadow-sm border-primary">
     <div class="card-header">
-        <h3 style="float:center; font-size:20px; class=text-muted">What do you think this explanation is good. Why not?</h3>
+        <h3 style="float:center; font-size:20px;text-align: justify; class=text-muted;">What do you think this explanation is good. Why not?</h3>
         <br>
-        <h4>Below rating the explanation and write your Explanation</h4>
+        <h4 style="float:center; font-size:20px;text-align: justify; class=text-muted;">Below rating the explanation and write your Explanation</h4>
     </div>
 </div>
 """
@@ -55,7 +55,7 @@ description = """
 <h2>Master Thesis Topic:- Collecting and analyse automatically generated feedback explanations</h2>
 <h3 style='font-weight: normal; font-family:'Open Sans', sans-serif;'>Contact Email-ID:- nikulkumar.goyani@stud.uni-due.de</h3>
 <p style='outline-style: solid;padding:10px;outline-color: rgba(170, 50, 220, .6);font-size:20px; text-align: center; class=text-muted;font-family:'Open Sans', sans-serif; '> <b>PROTECTION OF DATA:-</b><br>
-<ul style='font-size:18px;font-family: "Source Sans Pro", sans-serif;  text-align: justify;'>
+<ul style='font-size:20px;class=text-muted;text-align: justify;'>
   <li> The dataset comprises student replies to explanation and definition questions found in practise activities and exams. 
   The Student Response Analysis dataset is split into two parts: Beetle and SciEntsBank. 
   Answers to explanation and definition questions are meticulously labelled. The data set includes a sample question, reference answer, and student response.
