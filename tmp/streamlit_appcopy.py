@@ -17,31 +17,31 @@ EXPLANATION_HTML = """
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     
-<div class="card mb-12 shadow-sm"   >
-      <div class="card-body"  style='outline-style: solid;padding:10px;outline-color: blue;'>
+<div class="card mb-12 shadow-sm border-primary">
+      <div class="card-body"  style='font-size:20px; text-align: justify; class=text-muted;'>
         <h2 class="card-title">Result:</h2>
         Your answer is {answerStatus}.
     </div>
 </div>
 <br>
-<div class="card mb-12 shadow-sm">
-      <div class="card-body" style='outline-style: solid;padding:10px;outline-color: red;'>
-        <h2 class="card-title">reference_answer:</h2>
+<div class="card mb-12 shadow-sm border-primary">
+      <div class="card-body" style='font-size:20px; text-align: justify; class=text-muted;'>
+        <h2 class="card-title">Reference Answer:</h2>
         {reference_ans}
     </div>
 </div>
-<div class="card mb-12 shadow-sm" >
-      <div class="card-body" style='outline-style: solid;padding:10px;outline-color: green;'>
+<br>
+<div class="card mb-12 shadow-sm  border-primary">
+      <div class="card-body" style='font-size:20px;text-align: justify; class=text-muted;'>
         <h2 class="card-title">Explanation:</h2>
         {explanation}
     </div>
 </div>
-<br>
 """
 EVOLUTION_HTML = """
 <div class="card mb-12 shadow-sm">
     <div class="card-header">
-        <h3 style="float:center; font-size:20px; "class="text-muted">What do you think this explanation is good. Why not?</h3>
+        <h3 style="float:center; font-size:20px; class=text-muted">What do you think this explanation is good. Why not?</h3>
         <br>
         <h4>Below rating the explanation and write your Explanation</h4>
     </div>
@@ -54,7 +54,7 @@ LOGO_URL = "https://www.ltl.uni-due.de/assets/images/logo3.png"
 description = """
 <h2>Master Thesis Topic:- Collecting and analyse automatically generated feedback explanations</h2>
 <h3 style='font-weight: normal; font-family:'Open Sans', sans-serif;'>Contact Email-ID:- nikulkumar.goyani@stud.uni-due.de</h3>
-<p style='outline-style: solid;padding:10px;outline-color: green; font-size:16px; text-align: center; font-family:'Open Sans', sans-serif; '> <b>PROTECTION OF DATA:-</b><br>
+<p style='outline-style: solid;padding:10px;outline-color: rgba(170, 50, 220, .6);font-size:20px; text-align: center; class=text-muted;font-family:'Open Sans', sans-serif; '> <b>PROTECTION OF DATA:-</b><br>
 <ul style='font-size:18px;font-family: "Source Sans Pro", sans-serif;  text-align: justify;'>
   <li> The dataset comprises student replies to explanation and definition questions found in practise activities and exams. 
   The Student Response Analysis dataset is split into two parts: Beetle and SciEntsBank. 
@@ -113,14 +113,21 @@ def clear_session_state():
 
 
 def create_question_string():
-    st.write("Question :-")
-    return f"<p style='outline-style: solid;padding:10px;outline-color: green;'> {data['question']}</p>"
+    st.write("Question :")
+    return f"<p style='outline-style: solid;padding:15px;outline-color: rgba(170, 50, 220, .6);text-align: justify;font-size:25px; class=text-muted'>" \
+           f"{data['question']}</p>"
+
+
+def create_answer_string():
+    return f"<p style='outline-style: solid;padding:10px;outline-color: rgba(170, 50, 220, .6);font-size:25px; class=text-muted; font-size: 25px;height: 75px;text-align: justify;'>" \
+           f" {data['student_answer']}</p>"
 
 
 def load_student_question_form():
     components.html(question_str)
     st.write("Student Answer :")
-    st.text_area("", value   =data['student_answer'])
+    components.html(answer_str)
+    # st.text_area("", value=data['student_answer'])
     components.html(
         EXPLANATION_HTML.format(
             answerStatus=data['accuracy'],
@@ -187,4 +194,5 @@ if enableLogo:
 
 st.markdown("___")
 question_str = create_question_string()
+answer_str = create_answer_string()
 load_student_question_form()
