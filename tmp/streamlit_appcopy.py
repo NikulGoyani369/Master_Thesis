@@ -19,21 +19,21 @@ EXPLANATION_HTML = """
     
 <div class="card mb-12 shadow-sm border-primary">
       <div class="card-body"  style='font-size:20px; text-align: justify; class=text-muted;'>
-        <h2 class="card-title">Result:</h2>
+        <h2 class="card-title">Result :</h2>
         Your answer is {answerStatus}.
     </div>
 </div>
 <br>
-<div class="card mb-12 shadow-sm border-primary">
+<div class="card mb-12 shadow-sm border-primary style="margin-top: 60px;">
       <div class="card-body" style='font-size:20px; text-align: justify; class=text-muted;'>
-        <h2 class="card-title">Reference Answer:</h2>
+        <h2 class="card-title">Reference Answer :</h2>
         {reference_ans}
     </div>
 </div>
 <br>
 <div class="card mb-12 shadow-sm  border-primary">
       <div class="card-body" style='font-size:20px;text-align: justify; class=text-muted;'>
-        <h2 class="card-title">Explanation:</h2>
+        <h2 class="card-title">Explanation :</h2>
         {explanation}
     </div>
 </div>
@@ -113,19 +113,21 @@ def clear_session_state():
 
 
 def create_question_string():
-    st.write("Question :")
-    return f"<p style='outline-style: solid;padding:15px;outline-color: rgba(170, 50, 220, .6);text-align: justify;font-size:25px; class=text-muted'>" \
+    # st.write("Question :")
+    return f"<h3 style=font-size:22px; class=text-muted;text-align: justify;display: none;'>Question :</h3>"\
+           f"<p style='outline-style: solid; margin:auto; padding:15px;outline-color: rgba(170, 50, 220, .6);text-align: justify;font-size:25px;height: 50px; class=text-muted'>" \
            f"{data['question']}</p>"
 
 
 def create_answer_string():
-    return f"<p style='outline-style: solid;padding:10px;outline-color: rgba(170, 50, 220, .6);font-size:25px; class=text-muted; font-size: 25px;height: 75px;text-align: justify;'>" \
+    return f"<h3 style=font-size:22px; class=text-muted;text-align: justify;display: none;'>Student Answer :</h3>"\
+           f"<p style='outline-style: solid;padding:10px; outline-color: rgba(170, 50, 220, .6);font-size:25px; class=text-muted;height: 55px;text-align: justify;'>" \
            f" {data['student_answer']}</p>"
 
 
 def load_student_question_form():
     components.html(question_str)
-    st.write("Student Answer :")
+    # st.write("Student Answer :")
     components.html(answer_str)
     # st.text_area("", value=data['student_answer'])
     components.html(
