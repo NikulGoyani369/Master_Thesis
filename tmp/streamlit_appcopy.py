@@ -44,21 +44,20 @@ EVOLUTION_HTML = """
 <div class="card mb-12 shadow-sm border-primary">
     <div class="card-header">
     <div class="card-body" style='font-size:20px;text-align: justify; class=text-muted;font-family: 'IBM Plex Sans', sans-serif;'>
-         <h3 class="card-title" style="text-align: justify; class=text-muted;font-family: 'IBM Plex Sans', sans-serif; float:center; font-size:20px;"> For the generated explanation, read the below questions, and you could do the Evaluation based on rating and add your feedback in the section below.</h3>
+         <h3 class="card-title" style="text-align: justify; class=text-muted;font-family: 'IBM Plex Sans', sans-serif; float:center; font-size:20px;"> For the generated explanation, read the below questions, and you could do the Evaluation based on rating and write your feedback in the section below.</h3>
     </div>
         <ul style=" font-family: 'IBM Plex Sans', sans-serif;float:center;">
-            <li><p style="float:center; font-size:20px;text-align: justify; class=text-muted;">What do you think this explanation is good. Why not?</p></li>
-            <li><p style="float:center; font-size:20px;text-align: justify; class=text-muted;">What is wrong with this generated explanation?</p></li>
+            <li><p style="float:center; font-size:20px;text-align: justify; class=text-muted;">What do you think about the generated explanation?  Good or Bad? </p></li>
             <li><p style="float:center; font-size:20px;text-align: justify; class=text-muted;">Does the generated explanation convey meaning of the original text?</p></li>
             <li><p style="float:center; font-size:20px;text-align: justify; class=text-muted;">How useful did you find the generated explanation?</p></li>
             <li><p style="float:center; font-size:20px;text-align: justify; class=text-muted;">Is generated explanation easy to understand?</p></li>
-            <li><p style="float:center; font-size:20px;text-align: justify; class=text-muted;">How fluent is generated explanation of the context? Does it read well?</p></li>
+            <li><p style="float:center; font-size:20px;text-align: justify; class=text-muted;">Does the generated explanation is readable?</p></li>
+            <li><p style="float:center; font-size:20px;text-align: justify; class=text-muted;">What is wrong with this generated explanation?</p></li>
         </ul>
     </div>
 </div>
 </div>
 """
-
 
 st.markdown("University Department:- [Language Technology Lab](https://www.ltl.uni-due.de)")
 
@@ -128,13 +127,13 @@ def clear_session_state():
 
 def create_question_string():
     # st.write("Question :")
-    return f"<h3 style='font-family: 'IBM Plex Sans', sans-serif; font-size:22px; class=text-muted;text-align: justify;display: none;'>Question :</h3>"\
+    return f"<h3 style='font-family: 'IBM Plex Sans', sans-serif; font-size:22px; class=text-muted;text-align: justify;display: none;'>Question :</h3>" \
            f"<p style='outline-style: solid; margin:auto; padding:15px;outline-color: rgba(170, 50, 220, .6);text-align: justify;font-size:25px;height: 50px; class=text-muted'>" \
            f"{data['question']}</p>"
 
 
 def create_answer_string():
-    return f"<h3 style=' font-family: 'IBM Plex Sans', sans-serif; font-size:22px; class=text-muted;text-align: justify;display: none;'>Student Answer :</h3>"\
+    return f"<h3 style=' font-family: 'IBM Plex Sans', sans-serif; font-size:22px; class=text-muted;text-align: justify;display: none;'>Student Answer :</h3>" \
            f"<p style='outline-style: solid;padding:10px; outline-color: rgba(170, 50, 220, .6);font-size:25px; class=text-muted;height: 55px;text-align: justify;'>" \
            f" {data['student_answer']}</p>"
 
@@ -161,7 +160,7 @@ def load_student_question_form():
 
     st.container()
     with st.form("form", clear_on_submit=True):
-        components.html(EVOLUTION_HTML.format(), height=400,scrolling=True)
+        components.html(EVOLUTION_HTML.format(), height=400, scrolling=True)
         st.radio("Select Rating :", radioOptions, key=STUDENT_RATING)
         st.text_area("Student Feedback :", key=STUDENT_EXPLANATION)
         col1, col2, col3, col4, col5 = st.columns(5)
