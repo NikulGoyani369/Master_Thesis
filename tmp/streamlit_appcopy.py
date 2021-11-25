@@ -1,9 +1,7 @@
-import glob
-import streamlit as st
 import openai
 import pymongo as mongo
+import streamlit as st
 import streamlit.components.v1 as components
-from bs4 import BeautifulSoup
 
 COUNT = 'count'
 STUDENT_EXPLANATION = 'student_explanation'
@@ -79,7 +77,8 @@ description = """
   <li> Original principle of this thesis is to take an answers from the student, which can then be classified as either correct or incorrect.
   Based on the student answers, generate an explanation of why the student's answer is incorrect or correct. Firstly, it is a machine-generated explanation by
   the model of Natural Language Processing (NLP). Finally, it asks the student to evaluate if the machine-generated explanation is viable or write a student feedback. </li> <br>
-  <li> Whatever data is provided in this survey will be taken into use only for this thesis work. The data will not be shared in any place. This data will remain completly anonymous.</li>
+  <li> Whatever data is provided in this survey will be taken into use only for this thesis work. The data will not be 
+  shared in any place. This data will remain completly anonymous.</li>
 </ul>
 </p>
 """
