@@ -44,7 +44,7 @@ EVOLUTION_HTML = """
 <div class="card mb-12 shadow-sm border-primary">
     <div class="card-header">
     <div class="card-body" style='font-size:20px;text-align: justify; class=text-muted;font-family: 'IBM Plex Sans', sans-serif;'>
-         <p style="font-family: 'IBM Plex Sans', sans-serif; float:center; font-size:20px;text-align: justify; class=text-muted;"> For the generated explanation, you could complete the Evaluation based on rating and add your feedback in the section below.</p>
+         <p class="card-title" style="font-family: 'IBM Plex Sans', sans-serif; float:center; font-size:20px;text-align: justify; class=text-muted;"> For the generated explanation, you could complete the Evaluation based on rating and add your feedback in the section below.</p>
     </div>
         <ul style=" font-family: 'IBM Plex Sans', sans-serif;float:center;">
             <li><p style="float:center; font-size:20px;text-align: justify; class=text-muted;">What do you think this explanation is good. Why not?</p></li>
