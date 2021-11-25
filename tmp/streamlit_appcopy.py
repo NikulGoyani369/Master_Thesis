@@ -68,14 +68,13 @@ description = """
 <h3 style='font-weight: normal; font-family: 'IBM Plex Sans', sans-serif;'>Contact Email-ID:- nikulkumar.goyani@stud.uni-due.de</h3>
 <p style='outline-style: solid;padding:10px;outline-color: rgba(170, 50, 220, .6);font-size:20px; text-align: center; class=text-muted;font-family:'Open Sans', sans-serif; '> <b>PROTECTION OF DATA:-</b><br>
 <ul style='font-size:20px;class=text-muted;text-align: justify;'>
-  <li> The dataset comprises student replies to explanation and definition questions found in practise activities and exams. 
+  <li>In this thesis research, we used the SRA dataset comprises student replies to explanation and definition questions found in practice activities and exams. 
   The Student Response Analysis dataset is split into two parts: Beetle and SciEntsBank. 
   Answers to explanation and definition questions are meticulously labelled. The data set includes an question, reference answer, and student response.
   In this thesis, a human annotator classifies each student response as one of five evaluations. 
   We used the SRA dataset to build our dataset. </li> <br>
-  <li> Original principle of this thesis is to take an answers from the student, which can then be classified as either correct or incorrect.
-  Based on the student answers, generate an explanation of why the student's answer is incorrect or correct. Firstly, it is a machine-generated explanation by
-  the model of Natural Language Processing (NLP). Finally, it asks the student to evaluate if the machine-generated explanation is viable or write a student feedback. </li> <br>
+  <li> The original principle of this thesis is to generate an explanation and get evaluation feedback from the student, which can then classify as either Rating or Student Feedback .
+Based on the student answers, generate an explanation of why the student's answer is correct or incorrect. Firstly, it is a model-generated explanation by the model of Natural Language Processing (NLP). Finally, it asks the student to evaluate if the model-generated explanation is viable, asking students to write feedback.</li> <br>
   <li> Whatever data is provided in this survey will be taken into use only for this thesis work. The data will not be 
   shared in any place. This data will remain completly anonymous.</li>
 </ul>
