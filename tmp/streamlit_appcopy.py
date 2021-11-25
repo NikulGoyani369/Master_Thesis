@@ -164,8 +164,17 @@ def load_student_question_form():
         components.html(EVOLUTION_HTML.format(), height=400,scrolling=True)
         st.radio("Select Rating :", radioOptions, key=STUDENT_RATING)
         st.text_area("Student Feedback :", key=STUDENT_EXPLANATION)
-        st.form_submit_button(
-            "Next Question", on_click=feedback_form_submitted)
+        col1, col2, col3, col4, col5 = st.columns(5)
+        with col1:
+            pass
+        with col2:
+            pass
+        with col4:
+            pass
+        with col5:
+            pass
+        with col3:
+            st.form_submit_button("Next Question", on_click=feedback_form_submitted)
 
 
 def initialize_session_state():
