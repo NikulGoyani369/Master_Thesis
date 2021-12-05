@@ -4,8 +4,14 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 COUNT = 'count'
-STUDENT_EXPLANATION = 'student_explanation'
+# STUDENT_EXPLANATION = 'student_explanation'
 STUDENT_RATING = 'rating'
+STUDENT_EVALUTION_QUESITON1 = 'What do you think about the generated explanation?'
+STUDENT_EVALUTION_QUESITON2 = 'Does the generated explanation convey meaning of the original text?',
+STUDENT_EVALUTION_QUESITON3 = 'How useful did you find the generated explanation?',
+STUDENT_EVALUTION_QUESITON4 = 'Is generated explanation easy to understand?',
+STUDENT_EVALUTION_QUESITON5 = 'Does the generated explanation is readable?',
+STUDENT_EVALUTION_QUESITON6 = 'What is wrong with this generated explanation?',
 
 EXPLANATION_HTML = """
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -76,7 +82,7 @@ description = """
   <li> The original principle of this thesis is to generate an explanation and get evaluation feedback from the student, which can then classify as either Rating or Student Feedback .
 Based on the student answers, generate an explanation of why the student's answer is correct or incorrect. Firstly, it is a model-generated explanation by the model of Natural Language Processing (NLP). Finally, it asks the student to evaluate if the model-generated explanation is viable, asking students to write feedback.</li> <br>
   <li> Whatever data is provided in this survey will be taken into use only for this thesis work. The data will not be 
-  shared in any place. This data will remain completly anonymous.</li>
+  shared in any place. This data will remain completely anonymous.</li>
 </ul>
 </p>
 """
@@ -104,8 +110,14 @@ def create_dict():
         'student_answer': data['student_answer'],
         'accuracy': data['accuracy'],
         'explanation': data['explanation'],
+        'What do you think about the generated explanation?': st.session_state[STUDENT_EVALUTION_QUESITON1],
         'rating': st.session_state[STUDENT_RATING],
-        'student_explanation': st.session_state[STUDENT_EXPLANATION]
+        'Does the generated explanation convey meaning of the original text?': st.session_state[STUDENT_EVALUTION_QUESITON2],
+        'How useful did you find the generated explanation?': st.session_state[STUDENT_EVALUTION_QUESITON3],
+        'Is generated explanation easy to understand?': st.session_state[STUDENT_EVALUTION_QUESITON4],
+        'Does the generated explanation is readable?': st.session_state[STUDENT_EVALUTION_QUESITON5],
+        'What is wrong with this generated explanation?': st.session_state[STUDENT_EVALUTION_QUESITON6],
+        # 'student_explanation': st.session_state[STUDENT_EXPLANATION]
     }
 
 
@@ -114,7 +126,7 @@ def increment_counter():
 
 
 def clear_session_state():
-    st.session_state[STUDENT_EXPLANATION] = ''
+    # st.session_state[STUDENT_EXPLANATION] = ''
     st.session_state[STUDENT_RATING] = '1 Star'
     print(st.session_state)
 
@@ -151,17 +163,59 @@ def load_student_question_form():
         height=600,
         scrolling=True
     )
+
     st.write(
         '<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
     st.write(
         '<style>div.row-widget.stButton > div{flex-direction:row;}</style>', unsafe_allow_html=True)
     radioOptions = ['1 Star', '2 Star', '3 Star', '4 Star', '5 Star']
-
+    radioOptionss = ['Yes', 'No', 'Maybe', 'Can not say']
     st.container()
-    with st.form("form", clear_on_submit=True):
-        components.html(EVOLUTION_HTML.format(), height=400, scrolling=True)
+    with st.form("form1", clear_on_submit=True):
+        st.write(
+            '<p style="float:center; font-size:20px;text-align: justify; class=text-muted;">For the generated explanation, read the below questions, and you could do the Evaluation based on rating and write your feedback in the section below.</p>',
+            unsafe_allow_html=True)
+
+        st.write(
+            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 1) What are your thoughts about the generated explanation?</p>',
+            unsafe_allow_html=True)
+        st.text_area("write your Feedback :", key=STUDENT_EVALUTION_QUESITON1)
+
+        st.write(
+            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;">2) What do you think what ratings would you like to give for this generated explanation?</p>',
+            unsafe_allow_html=True)
         st.radio("Select Rating :", radioOptions, key=STUDENT_RATING)
-        st.text_area("Student Feedback :", key=STUDENT_EXPLANATION)
+
+        st.write(
+            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;">3) What do you think the generated explanation is fully realated to the student answer?</p>',
+            unsafe_allow_html=True)
+
+        st.radio('Select one option :', radioOptionss, key=STUDENT_EVALUTION_QUESITON2)
+
+
+        st.write(
+            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;">4) How useful did you find the generated explanation?</p>',
+            unsafe_allow_html=True)
+        st.radio('Select three known variables :',
+                          ['Very Good',
+                           'Good',
+                           'Ok',
+                           'Bad'], key=STUDENT_EVALUTION_QUESITON3)
+        st.write(
+            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;">5) Give your valuable input to this generated explanation to make it more simpler to understand?</p>',
+            unsafe_allow_html=True)
+        st.text_area("write your feedback :",key=STUDENT_EVALUTION_QUESITON4)
+        st.write(
+            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;">6) Does the generated explanation is readable?</p>',
+            unsafe_allow_html=True)
+        option_s = st.multiselect('Select three variables that are known :',['Easy to read','Difficult to read','Not understandable',
+                                                'Grammatically ok','Bad sentence formation'],key=STUDENT_EVALUTION_QUESITON5)
+
+        st.write(
+            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;">7) What is wrong with this generated explanation?</p>',
+            unsafe_allow_html=True)
+        st.text_area("write your feedback :",key= STUDENT_EVALUTION_QUESITON6)
+
         col1, col2, col3, col4, col5 = st.columns(5)
         with col1:
             pass
@@ -175,15 +229,45 @@ def load_student_question_form():
             st.form_submit_button("Next Question", on_click=feedback_form_submitted)
 
 
+    #
+    # st.write(
+    #     ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;">6)  What is wrong with this generated explanation?</p>',
+    #     unsafe_allow_html=True)
+
+
+
+
+    # st.container()
+    # with st.form("form", clear_on_submit=True):
+    #     components.html(EVOLUTION_HTML.format(), height=380, scrolling=True)
+    #
+    #
+    #     st.text_area("Student Feedback :", key=STUDENT_EXPLANATION)
+    #
+    #     st.form_submit_button("Next Question", on_click=feedback_form_submitted)
+
+
 def initialize_session_state():
     st.session_state[COUNT] = 1
     st.session_state[STUDENT_RATING] = '1 Star'
-    st.session_state[STUDENT_EXPLANATION] = ''
+    # st.session_state[STUDENT_EXPLANATION] = ''
+    st.session_state[STUDENT_EVALUTION_QUESITON1] = ''
+    st.session_state[STUDENT_EVALUTION_QUESITON2] = 'Yes'
+    st.session_state[STUDENT_EVALUTION_QUESITON3] = 'Very Good'
+    st.session_state[STUDENT_EVALUTION_QUESITON4] = ''
+    st.session_state[STUDENT_EVALUTION_QUESITON5] = 'Easy to read'
+    st.session_state[STUDENT_EVALUTION_QUESITON6] = ''
 
 
 def initialize_few_session_state():
     st.session_state[STUDENT_RATING] = '1 Star'
-    st.session_state[STUDENT_EXPLANATION] = ''
+    # st.session_state[STUDENT_EXPLANATION] = ''
+    st.session_state[STUDENT_EVALUTION_QUESITON1] = ''
+    st.session_state[STUDENT_EVALUTION_QUESITON2] = 'Yes'
+    st.session_state[STUDENT_EVALUTION_QUESITON3] = 'Very Good'
+    st.session_state[STUDENT_EVALUTION_QUESITON4] = ''
+    st.session_state[STUDENT_EVALUTION_QUESITON5] = 'Easy to read'
+    st.session_state[STUDENT_EVALUTION_QUESITON6] = ''
 
 
 # main routine
