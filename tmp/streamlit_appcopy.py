@@ -9,7 +9,7 @@ STUDENT_RATING = 'rating'
 STUDENT_EVALUTION_QUESITON1 = 'What do you think about the generated explanation?'
 STUDENT_EVALUTION_QUESITON2 = 'Does the generated explanation convey meaning of the original text?',
 STUDENT_EVALUTION_QUESITON3 = 'How useful did you find the generated explanation?',
-STUDENT_EVALUTION_QUESITON4 = 'Is generated explanation easy to understand?',
+STUDENT_EVALUTION_QUESITON4 = 'Is there an alternative explanation that solves the same problem?',
 STUDENT_EVALUTION_QUESITON5 = 'Does the generated explanation is readable?',
 STUDENT_EVALUTION_QUESITON6 = 'What is wrong with this generated explanation?',
 
@@ -114,7 +114,7 @@ def create_dict():
         'rating': st.session_state[STUDENT_RATING],
         'Does the generated explanation convey meaning of the original text?': st.session_state[STUDENT_EVALUTION_QUESITON2],
         'How useful did you find the generated explanation?': st.session_state[STUDENT_EVALUTION_QUESITON3],
-        'Is generated explanation easy to understand?': st.session_state[STUDENT_EVALUTION_QUESITON4],
+        'Is there an alternative explanation that solves the same problem?': st.session_state[STUDENT_EVALUTION_QUESITON4],
         'Does the generated explanation is readable?': st.session_state[STUDENT_EVALUTION_QUESITON5],
         'What is wrong with this generated explanation?': st.session_state[STUDENT_EVALUTION_QUESITON6],
         # 'student_explanation': st.session_state[STUDENT_EXPLANATION]
@@ -202,14 +202,15 @@ def load_student_question_form():
                            'Ok',
                            'Bad'], key=STUDENT_EVALUTION_QUESITON3)
         st.write(
-            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;">5) Give your valuable input to this generated explanation to make it more simpler to understand?</p>',
+            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;">5) Is there an alternative explanation that solves the same problem?</p>',
             unsafe_allow_html=True)
         st.text_area("write your feedback :",key=STUDENT_EVALUTION_QUESITON4)
         st.write(
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;">6) Does the generated explanation is readable?</p>',
             unsafe_allow_html=True)
-        option_s = st.multiselect('Select three variables that are known :',['Easy to read','Difficult to read','Not understandable',
-                                                'Grammatically ok','Bad sentence formation'],key=STUDENT_EVALUTION_QUESITON5)
+        option_s = st.multiselect('Select three variables that are known :',['1) Easy to read','2) Difficult to read',' 3) Not understandable',
+                                                '4)  Bad sentence formation','5) Ambiguous pronoun references', '6) logical fallacies','7) misspellings typographical errors',
+                                                                             '8) faulty punctuation'],key=STUDENT_EVALUTION_QUESITON5)
 
         st.write(
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;">7) What is wrong with this generated explanation?</p>',
