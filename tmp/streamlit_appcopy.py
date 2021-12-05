@@ -204,9 +204,9 @@ def load_student_question_form():
         st.write(
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 5) Is there an alternative explanation that solves the same problem?</p>',
             unsafe_allow_html=True)
-        # st.write(
-        #     ' <p style="float:center; font-size:18px;text-align: justify; class=text-muted;"> : If Yes Write below your Explanation  Or If No go Further </p>',
-        #     unsafe_allow_html=True)
+        st.write(
+            ' <p style="float:center; font-size:18px;text-align: justify; class=text-muted;"> : If  Yes  Write  your  Explanation  here  <b>Or</b>  If  No  go  Further </p>',
+            unsafe_allow_html=True)
         st.text_area("Write Your Feedback :",key=STUDENT_EVALUTION_QUESITON4)
         st.write(
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 6) Does the generated explanation is readable?</p>',
@@ -259,7 +259,7 @@ def initialize_session_state():
     st.session_state[STUDENT_EVALUTION_QUESITON1] = ''
     st.session_state[STUDENT_EVALUTION_QUESITON2] = 'Yes'
     st.session_state[STUDENT_EVALUTION_QUESITON3] = 'Very Good'
-    st.session_state[STUDENT_EVALUTION_QUESITON4] = 'If  Yes  Write  your  Explanation  here  Or  If  No  go  Further'
+    st.session_state[STUDENT_EVALUTION_QUESITON4] = ''
     st.session_state[STUDENT_EVALUTION_QUESITON5] = '1) Easy to read'
     st.session_state[STUDENT_EVALUTION_QUESITON6] = '1) There is a mistake in the grammar'
 
@@ -270,7 +270,7 @@ def initialize_few_session_state():
     st.session_state[STUDENT_EVALUTION_QUESITON1] = ''
     st.session_state[STUDENT_EVALUTION_QUESITON2] = 'Yes'
     st.session_state[STUDENT_EVALUTION_QUESITON3] = 'Very Good'
-    st.session_state[STUDENT_EVALUTION_QUESITON4] = 'If  Yes  Write  your  Explanation  here  Or  If  No  go  Further'
+    st.session_state[STUDENT_EVALUTION_QUESITON4] = ''
     st.session_state[STUDENT_EVALUTION_QUESITON5] = '1) Easy to read'
     st.session_state[STUDENT_EVALUTION_QUESITON6] = '1) There is a mistake in the grammar'
 
