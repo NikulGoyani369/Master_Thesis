@@ -179,7 +179,7 @@ def load_student_question_form():
         st.write(
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 1) What are your thoughts about the generated explanation?</p>',
             unsafe_allow_html=True)
-        st.text_area("write your Feedback :", key=STUDENT_EVALUTION_QUESITON1)
+        st.text_area("Write Your Feedback :", key=STUDENT_EVALUTION_QUESITON1)
 
         st.write(
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 2) What do you think what ratings would you like to give for this generated explanation?</p>',
@@ -190,13 +190,13 @@ def load_student_question_form():
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 3) What do you think the generated explanation is fully realated to the student answer?</p>',
             unsafe_allow_html=True)
 
-        st.radio('Select one option :', radioOptionss, key=STUDENT_EVALUTION_QUESITON2)
+        st.radio('Select One Option :', radioOptionss, key=STUDENT_EVALUTION_QUESITON2)
 
 
         st.write(
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 4) How useful did you find the generated explanation?</p>',
             unsafe_allow_html=True)
-        st.radio('Select three known variables :',
+        st.radio('Select one known variables :',
                           ['Very Good',
                            'Good',
                            'Ok',
@@ -204,7 +204,10 @@ def load_student_question_form():
         st.write(
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 5) Is there an alternative explanation that solves the same problem?</p>',
             unsafe_allow_html=True)
-        st.text_area("write your feedback :",key=STUDENT_EVALUTION_QUESITON4)
+        # st.write(
+        #     ' <p style="float:center; font-size:18px;text-align: justify; class=text-muted;"> : If Yes Write below your Explanation  Or If No go Further </p>',
+        #     unsafe_allow_html=True)
+        st.text_area("Write Your Feedback :",key=STUDENT_EVALUTION_QUESITON4)
         st.write(
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 6) Does the generated explanation is readable?</p>',
             unsafe_allow_html=True)
@@ -256,7 +259,7 @@ def initialize_session_state():
     st.session_state[STUDENT_EVALUTION_QUESITON1] = ''
     st.session_state[STUDENT_EVALUTION_QUESITON2] = 'Yes'
     st.session_state[STUDENT_EVALUTION_QUESITON3] = 'Very Good'
-    st.session_state[STUDENT_EVALUTION_QUESITON4] = ''
+    st.session_state[STUDENT_EVALUTION_QUESITON4] = 'If  Yes  Write  your  Explanation  here  Or  If  No  go  Further'
     st.session_state[STUDENT_EVALUTION_QUESITON5] = '1) Easy to read'
     st.session_state[STUDENT_EVALUTION_QUESITON6] = '1) There is a mistake in the grammar'
 
@@ -267,7 +270,7 @@ def initialize_few_session_state():
     st.session_state[STUDENT_EVALUTION_QUESITON1] = ''
     st.session_state[STUDENT_EVALUTION_QUESITON2] = 'Yes'
     st.session_state[STUDENT_EVALUTION_QUESITON3] = 'Very Good'
-    st.session_state[STUDENT_EVALUTION_QUESITON4] = ''
+    st.session_state[STUDENT_EVALUTION_QUESITON4] = 'If  Yes  Write  your  Explanation  here  Or  If  No  go  Further'
     st.session_state[STUDENT_EVALUTION_QUESITON5] = '1) Easy to read'
     st.session_state[STUDENT_EVALUTION_QUESITON6] = '1) There is a mistake in the grammar'
 
