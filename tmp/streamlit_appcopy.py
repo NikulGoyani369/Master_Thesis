@@ -179,15 +179,17 @@ def load_student_question_form():
         st.write(
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 1) What are your thoughts about the generated explanation?</p>',
             unsafe_allow_html=True)
-        st.text_area("Write Your Feedback :", key=STUDENT_EVALUTION_QUESITON1)
+        st.multiselect('Select three variables that are known :',
+                       ['1) Perfectly Understandable ', '2) Partially Understandable', ' 3) Partially Imperfect',
+                        '4) Completely Imperfect '], key=STUDENT_EVALUTION_QUESITON1)
 
         st.write(
-            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 2) What do you think what ratings would you like to give for this generated explanation?</p>',
+            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 2) What ratings would you like to give for this generated explanation?</p>',
             unsafe_allow_html=True)
         st.radio("Select Rating :", radioOptions, key=STUDENT_RATING)
 
         st.write(
-            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 3) What do you think the generated explanation is fully realated to the student answer?</p>',
+            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 3) Do you think the generated explanation is fully realated to the student answer?</p>',
             unsafe_allow_html=True)
 
         st.radio('Select One Option :', radioOptionss, key=STUDENT_EVALUTION_QUESITON2)
@@ -209,14 +211,14 @@ def load_student_question_form():
             unsafe_allow_html=True)
         st.text_area("Write Your Feedback :",key=STUDENT_EVALUTION_QUESITON4)
         st.write(
-            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 6) Does the generated explanation is readable?</p>',
+            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 6) Is the generated explanation is readable?</p>',
             unsafe_allow_html=True)
         st.multiselect('Select three variables that are known :',['1) Easy to read','2) Difficult to read',' 3) Not understandable',
                                                 '4)  Bad sentence formation','5) Ambiguous pronoun references', '6) logical fallacies','7) misspellings typographical errors',
                                                                              '8) faulty punctuation'],key=STUDENT_EVALUTION_QUESITON5)
 
         st.write(
-            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 7) What is wrong with this generated explanation?</p>',
+            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 7) What wrong do you find  in this generated explanation?</p>',
             unsafe_allow_html=True)
         st.multiselect('Select three variables that are known :',['1) There is a mistake in the grammar', '2) The sentence is not correct', '3) unconventional',
                         '4) an inappropriate verb tense', '5) Vocabulary Errors', '6) Too many prepositional phrases',], key=STUDENT_EVALUTION_QUESITON6)
@@ -256,7 +258,7 @@ def initialize_session_state():
     st.session_state[COUNT] = 1
     st.session_state[STUDENT_RATING] = '1 Star'
     # st.session_state[STUDENT_EXPLANATION] = ''
-    st.session_state[STUDENT_EVALUTION_QUESITON1] = ''
+    st.session_state[STUDENT_EVALUTION_QUESITON1] = '1) Perfectly Understandable '
     st.session_state[STUDENT_EVALUTION_QUESITON2] = 'Yes'
     st.session_state[STUDENT_EVALUTION_QUESITON3] = 'Very Good'
     st.session_state[STUDENT_EVALUTION_QUESITON4] = ''
@@ -267,7 +269,7 @@ def initialize_session_state():
 def initialize_few_session_state():
     st.session_state[STUDENT_RATING] = '1 Star'
     # st.session_state[STUDENT_EXPLANATION] = ''
-    st.session_state[STUDENT_EVALUTION_QUESITON1] = ''
+    st.session_state[STUDENT_EVALUTION_QUESITON1] = '1) Perfectly Understandable '
     st.session_state[STUDENT_EVALUTION_QUESITON2] = 'Yes'
     st.session_state[STUDENT_EVALUTION_QUESITON3] = 'Very Good'
     st.session_state[STUDENT_EVALUTION_QUESITON4] = ''
