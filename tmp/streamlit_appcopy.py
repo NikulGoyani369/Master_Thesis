@@ -74,15 +74,16 @@ description = """
 <h3 style='font-weight: normal; font-family: 'IBM Plex Sans', sans-serif;'>Contact Email-ID:- nikulkumar.goyani@stud.uni-due.de</h3>
 <p style='outline-style: solid;padding:10px;outline-color: rgba(170, 50, 220, .6);font-size:20px; text-align: center; class=text-muted;font-family:'Open Sans', sans-serif; '> <b>PROTECTION OF DATA:-</b><br>
 <ul style='font-size:20px;class=text-muted;text-align: justify;'>
-  <li>In this thesis research, we used the SRA dataset comprises student replies to explanation and definition questions found in practice activities and exams. 
-  The Student Response Analysis dataset is split into two parts: Beetle and SciEntsBank. 
+  <li>In this master thesis research, we used the Student Response Analysis dataset comprises student replies to explanation and definition questions found in practice activities and exams. 
+  The SRA dataset is split into two parts: Beetle and SciEntsBank. 
   Answers to explanation and definition questions are meticulously labelled. The data set includes an question, reference answer, and student response.
   In this thesis, a human annotator classifies each student response as one of five evaluations. 
   We used the SRA dataset to build our dataset. </li> <br>
   <li> The original principle of this thesis is to generate an explanation and get evaluation feedback from the student, which can then classify as either Rating or Student Feedback .
 Based on the student answers, generate an explanation of why the student's answer is correct or incorrect. Firstly, it is a model-generated explanation by the model of Natural Language Processing (NLP). Finally, it asks the student to evaluate if the model-generated explanation is viable, asking students to write feedback.</li> <br>
   <li> Whatever data is provided in this survey will be taken into use only for this thesis work. The data will not be 
-  shared in any place. This data will remain completely anonymous.</li>
+  shared in any place. This data will remain completely anonymous.
+  The feedback form started after a generated explanation. </li>
 </ul>
 </p>
 """
@@ -173,7 +174,7 @@ def load_student_question_form():
     st.container()
     with st.form("form1", clear_on_submit=True):
         st.write(
-            '<p style="float:center; font-size:20px;text-align: justify; class=text-muted;">For the generated explanation, read the below questions, and you could do the Evaluation based on rating and write your feedback in the section below.</p>',
+            '<p style="float:center; font-size:20px;text-align: justify; class=text-muted;"><b>For the generated explanation, read the below questions, and you could do the Evaluation based on rating and write your feedback in the section below.</b></p>',
             unsafe_allow_html=True)
 
         st.write(
@@ -303,7 +304,7 @@ data = {
 # first uni logo with description
 if enableLogo:
     st.image(use_column_width=True, image=LOGO_URL)
-    components.html(description, height=350, width=700, scrolling=True)
+    components.html(description, height=640, width=800)
 
 st.markdown("___")
 question_str = create_question_string()
