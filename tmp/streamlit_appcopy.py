@@ -190,14 +190,12 @@ def load_student_question_form():
         st.multiselect('Select one variables that are known :',
                        ['1) Perfectly Understandable ', '2) Partially Understandable', ' 3) Partially Imperfect',
                         '4) Completely Imperfect '], key=STUDENT_EVALUTION_QUESITON1)
-
         st.write(
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 2) What ratings would you like to give for this generated explanation?</p>',
             unsafe_allow_html=True)
         st.radio("Select Rating :", radioOptions, key=STUDENT_RATING)
-
         st.write(
-            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 3) Do you think the generated explanation is fully realated to the student answer?</p>',
+            ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 3) Do you think the generated explanation is fully related to the student answer?</p>',
             unsafe_allow_html=True)
 
         st.radio('Select One Option :', radioOptionss, key=STUDENT_EVALUTION_QUESITON2)
