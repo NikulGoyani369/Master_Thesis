@@ -111,13 +111,20 @@ def create_dict():
         'student_answer': data['student_answer'],
         'accuracy': data['accuracy'],
         'explanation': data['explanation'],
-        'What do you think about the generated explanation?': st.session_state[STUDENT_EVALUTION_QUESITON1],
-        'rating': st.session_state[STUDENT_RATING],
-        'Does the generated explanation convey meaning of the original text?': st.session_state[STUDENT_EVALUTION_QUESITON2],
-        'How useful did you find the generated explanation?': st.session_state[STUDENT_EVALUTION_QUESITON3],
-        'Is there an alternative explanation that solves the same problem?': st.session_state[STUDENT_EVALUTION_QUESITON4],
-        'Does the generated explanation is readable?': st.session_state[STUDENT_EVALUTION_QUESITON5],
-        'What is wrong with this generated explanation?': st.session_state[STUDENT_EVALUTION_QUESITON6],
+        'What do you think about the generated explanation?':
+            st.session_state[STUDENT_EVALUTION_QUESITON1],
+        'rating':
+            st.session_state[STUDENT_RATING],
+        'Does the generated explanation convey meaning of the original text?':
+            st.session_state[STUDENT_EVALUTION_QUESITON2],
+        'How useful did you find the generated explanation?':
+            st.session_state[STUDENT_EVALUTION_QUESITON3],
+        'Is there an alternative explanation that solves the same problem?':
+            st.session_state[STUDENT_EVALUTION_QUESITON4],
+        'Does the generated explanation is readable?':
+            st.session_state[STUDENT_EVALUTION_QUESITON5],
+        'What is wrong with this generated explanation?':
+            st.session_state[STUDENT_EVALUTION_QUESITON6],
         # 'student_explanation': st.session_state[STUDENT_EXPLANATION]
     }
 
@@ -180,7 +187,7 @@ def load_student_question_form():
         st.write(
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 1) What are your thoughts about the generated explanation?</p>',
             unsafe_allow_html=True)
-        st.multiselect('Select three variables that are known :',
+        st.multiselect('Select one variables that are known :',
                        ['1) Perfectly Understandable ', '2) Partially Understandable', ' 3) Partially Imperfect',
                         '4) Completely Imperfect '], key=STUDENT_EVALUTION_QUESITON1)
 
