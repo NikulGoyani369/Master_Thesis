@@ -1,3 +1,6 @@
+import csv
+import random
+
 import openai
 import pymongo as mongo
 import streamlit as st
@@ -101,7 +104,7 @@ def feedback_form_submitted():
 
 def write_to_db(dict_to_save):
     db = client.nlp_db
-    csv_collection = db.csv_collection
+    csv_collection = db.csv_collection_2
     return csv_collection.insert_one(dict_to_save)
 
 
@@ -147,20 +150,21 @@ def clear_session_state():
 def create_question_string():
     # st.write("Question :")
     return f"<h3 style='font-family: 'IBM Plex Sans', sans-serif; font-size:22px; class=text-muted;text-align: justify;display: none;'>Question :</h3>" \
-           f"<p style='outline-style: solid; margin:auto; padding:15px;outline-color: rgba(170, 50, 220, .6);text-align: justify;font-size:25px;height: 50px; class=text-muted'>" \
+           f"<p style='outline-style: solid; margin:auto; padding:15px;outline-color: rgba(170, 50, 220, .6);text-align: justify;font-size:25px; class=text-muted'>" \
            f"{data['question']}</p>"
 
 
 def create_answer_string():
     return f"<h3 style=' font-family: 'IBM Plex Sans', sans-serif; font-size:22px; class=text-muted;text-align: justify;display: none;'>Student Answer :</h3>" \
-           f"<p style='outline-style: solid;padding:10px; outline-color: rgba(170, 50, 220, .6);font-size:25px; class=text-muted;height: 55px;text-align: justify;'>" \
+           f"<p style='outline-style: solid;padding:10px; outline-color: rgba(170, 50, 220, .6);font-size:25px; class=text-muted;text-align: justify;'>" \
            f" {data['student_answer']}</p>"
 
 
 def load_student_question_form():
-    components.html(question_str)
+
+    components.html(question_str, scrolling=True)
     # st.write("Student Answer :")
-    components.html(answer_str)
+    components.html(answer_str,scrolling=True)
     # st.text_area("", value=data['student_answer'])
     components.html(
         EXPLANATION_HTML.format(
@@ -296,9 +300,13 @@ else:
 # read the created dataset file
 file = open("./tmp/open_ai_questions_final.csv", encoding='utf-8')
 lines = file.readlines()
+ran = random.choice(lines)
+print('random choice:',ran)
 line = lines[st.session_state[COUNT]]
 
-row = line.split('|')
+row = ran.split('|')
+
+print('new data:',row)
 data = {
     'question': row[0],
     'ref_answer': row[1],
@@ -306,6 +314,12 @@ data = {
     'accuracy': row[3],
     'explanation': row[4],
 }
+
+
+# csv_reader = csv.reader(data)
+# question = list(csv_reader)
+# random_data = random.choice(question)
+# print(random_data)
 # first uni logo with description
 if enableLogo:
     st.image(use_column_width=True, image=LOGO_URL)
