@@ -100,7 +100,7 @@ def feedback_form_submitted():
 
 def write_to_db(dict_to_save):
     db = client.nlp_db
-    csv_collection = db.csv_collection_2
+    csv_collection = db.csv_Feedback_collection
     return csv_collection.insert_one(dict_to_save)
 
 
