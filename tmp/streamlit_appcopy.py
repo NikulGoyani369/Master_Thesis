@@ -220,14 +220,14 @@ def load_student_question_form():
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 6) Is the generated explanation is readable?</p>',
             unsafe_allow_html=True)
         st.multiselect('Select three variables that are known :',['1) Easy to read','2) Difficult to read',' 3) Not understandable',
-                                                '4)  Bad sentence formation','5) Ambiguous pronoun references', '6) logical fallacies','7) misspellings typographical errors',
+                                                '4) Bad sentence formation','5) Ambiguous pronoun references', '6) logical fallacies','7) misspellings typographical errors',
                                                                              '8) faulty punctuation'],key=STUDENT_EVALUTION_QUESITON5)
 
         st.write(
             ' <p style="float:center; font-size:20px;text-align: justify; class=text-muted;"> 7) What wrong do you find  in this generated explanation?</p>',
             unsafe_allow_html=True)
         st.multiselect('Select three variables that are known :',['1) There is a mistake in the grammar', '2) The sentence is not correct', '3) unconventional',
-                        '4) an inappropriate verb tense', '5) Vocabulary Errors', '6) Too many prepositional phrases',], key=STUDENT_EVALUTION_QUESITON6)
+                        '4) Incomplete sentence', '5) Vocabulary Errors', '6) Too many prepositional phrases',], key=STUDENT_EVALUTION_QUESITON6)
 
         col1, col2, col3, col4, col5 = st.columns(5)
         with col1:
