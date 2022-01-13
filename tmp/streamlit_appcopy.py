@@ -73,7 +73,7 @@ st.markdown("University Department:- [Language Technology Lab](https://www.ltl.u
 LOGO_URL = "https://www.ltl.uni-due.de/assets/images/logo3.png"
 
 description = """
-<h2 style='font-family: 'IBM Plex Sans', sans-serif;'>Master Thesis Topic:- Collecting and analyse automatically generated feedback explanations.</h2>
+<h2 style='font-family: 'IBM Plex Sans', sans-serif;'>Master Thesis Topic:- Collecting and analyzing automatically generated feedback explanations</h2>
 <h3 style='font-weight: normal; font-family: 'IBM Plex Sans', sans-serif;'> Contact Email-ID:- nikulkumar.goyani@stud.uni-due.de</h3>
 <p style='outline-style: solid;padding:10px;outline-color: rgba(170, 50, 220, .6);font-size:20px; text-align: center; class=text-muted;font-family:'Open Sans', sans-serif; '> <b>PROTECTION OF DATA:-</b><br>
 <ul style='font-size:20px;class=text-muted;text-align: justify;'>
